@@ -12,39 +12,27 @@ project:
     Бренды: Pudu, Viggo, X-Human, Yarbo.
   domain: "b2b-robotics.ru"
   created_at: "2026-01-19T21:00:00Z"
-  updated_at: "2026-01-19T21:00:00Z"
+  updated_at: "2026-01-19T22:30:00Z"
 
 # ============================================
-# ИСХОДНАЯ ИДЕЯ
+# ДИЗАЙН-СИСТЕМА
 # ============================================
-idea:
-  raw: |
-    Миграция сайта дистрибьютора роботов с Битрикса на Next.js.
-    Современный дизайн, быстрый, с ROI-калькулятором и витриной MARS.
-    Светлая тема с синими/серыми акцентами.
-    Супер-современный, с интересными переходами и анимациями.
-  interpreted: |
-    Цель: Заменить тяжёлый Битрикс на быстрый Next.js
-    
-    Функционал:
-    - Каталог роботов (~20 товаров, 7 категорий)
-    - Информация о компании и УТП
-    - ROI-калькулятор для расчёта окупаемости
-    - Витрина системы MARS (управление флотом)
-    - Формы заявок с интеграцией в CRM
-    
-    Дизайн:
-    - Светлая тема (как текущий сайт)
-    - Синие/серые акценты
-    - Современные анимации и переходы
-    - Mobile-first
-    
-    Будущее:
-    - AI чат-консультант
-    - Telegram-бот
-    - Личный кабинет клиента
-    - Чат-CMS (Forja)
-  validated: true
+design_system:
+  name: "Clean Tech Light"
+  description: |
+    Светлая тема с мягкими тенями, glow-эффектами, органическими формами.
+    Отличается от СисТех (тёмная тема + glassmorphism).
+  components:
+    - CursorGlow: "Мягкое свечение за курсором"
+    - MagneticButton: "Кнопки притягиваются к курсору"
+    - ScrollProgress: "Градиентная полоса прогресса"
+    - GlowCard: "Карточки с glow при наведении"
+    - SectionReveal: "Scroll-triggered анимации"
+  colors:
+    primary: "#2563eb"
+    violet: "#8b5cf6"
+    background: "#ffffff"
+    foreground: "#1a1a2e"
 
 # ============================================
 # РЕФЕРЕНСЫ
@@ -55,7 +43,7 @@ references:
       description: "Текущий сайт — структура и контент"
   style:
     - url: "https://systech-team.ru"
-      description: "Технологичный стиль, анимации"
+      description: "Референс для анимаций (но другая тема)"
   brands:
     - name: "Pudu"
       description: "Мировой лидер в сервисной робототехнике"
@@ -180,15 +168,15 @@ architecture:
 # ============================================
 flow:
   diagram: |
-    Level 0:           [setup]
+    Level 0:           [setup] ✅
                           ↓
-    Level 1:     [header]   [footer]
+    Level 1:     [header] ✅  [footer] ⏳
                     ↓
-    Level 2:  [hero] [partners] [about] [contacts]
+    Level 2:  [hero] ⏳  [partners] ⏳  [about] ⏳  [contacts] ⏳
                          ↓
-    Level 3:         [catalog]
+    Level 3:         [catalog] ⏳
                          ↓
-    Level 4:  [roi_calculator] [mars_showcase]
+    Level 4:  [roi_calculator] ⏳  [mars_showcase] ⏳
   
   parallel_groups:
     - level: 0
@@ -257,10 +245,12 @@ validation:
     - after_level: 0
       type: "automatic"
       criteria: "npm run dev работает, базовые стили применены"
+      status: "passed"
       
     - after_level: 1
       type: "automatic"
       criteria: "Header и Footer рендерятся, навигация работает"
+      status: "in_progress"
       
     - after_level: 2
       type: "human"
@@ -278,32 +268,84 @@ validation:
 # RUNTIME STATE
 # ============================================
 runtime:
-  status: "idle"
+  status: "in_progress"
   current_level: 1
+  last_updated: "2026-01-19T22:30:00Z"
   
   blocks:
     setup:
-      status: "pending"
+      status: "completed"
+      completed_at: "2026-01-19T21:30:00Z"
+      commits:
+        - "10a3a74: Block setup: Initialize Next.js project"
+      notes: "Next.js 16, Tailwind 4, Framer Motion, Clean Tech components"
+      
     header:
-      status: "pending"
+      status: "completed"
+      completed_at: "2026-01-19T22:00:00Z"
+      commits:
+        - "5048fad: Block header: Modern interactive header"
+        - "2dc08bc: Clean Tech Style: New component library"
+      notes: "Morphing header, hide/show on scroll, dropdown, shimmer CTA"
+      
     footer:
       status: "pending"
+      
     hero:
-      status: "pending"
+      status: "partial"
+      notes: "Базовая версия есть, нужен видео-эффект"
+      
     partners:
-      status: "pending"
+      status: "partial"
+      notes: "Заглушка есть, нужны реальные данные и логотипы"
+      
     about:
-      status: "pending"
+      status: "partial"
+      notes: "УТП карточки есть, нужна полная секция"
+      
     contacts:
       status: "pending"
+      
     catalog:
       status: "pending"
+      
     roi_calculator:
       status: "pending"
+      
     mars_showcase:
       status: "pending"
   
   errors: []
+
+# ============================================
+# SESSION LOG
+# ============================================
+sessions:
+  - id: "session-001"
+    date: "2026-01-19"
+    chat: "Initial setup + Clean Tech"
+    completed_blocks: ["setup", "header"]
+    commits:
+      - "9f41de8: Add Forja block architecture"
+      - "10a3a74: Block setup: Initialize Next.js project"
+      - "5048fad: Block header: Modern interactive header"
+      - "2dc08bc: Clean Tech Style: New component library"
+    notes: |
+      - Создана Forja архитектура (manifest + contracts)
+      - Инициализирован Next.js 16 с Tailwind 4
+      - Разработана дизайн-система Clean Tech Light
+      - Компоненты: CursorGlow, MagneticButton, ScrollProgress, GlowCard, SectionReveal
+      - Morphing Header с hide/show при скролле
+
+# ============================================
+# DEV SERVER
+# ============================================
+dev:
+  server: "Russia MCP (5.44.45.166)"
+  port: 3004
+  url: "http://5.44.45.166:3004"
+  pm2_name: "sovr-dev"
+  path: "/home/gricha/projects/sovr-resheniya"
 
 # ============================================
 # INTEGRATIONS (будущее)
@@ -327,10 +369,8 @@ integrations:
   ai:
     - feature: "chat_consultant"
       status: "phase_2"
-      description: "AI-консультант на сайте"
     - feature: "telegram_bot"
       status: "phase_2"
-      description: "Бот-консультант в Telegram"
 
 # ============================================
 # FORJA CMS (будущее)
