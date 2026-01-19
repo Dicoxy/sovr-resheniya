@@ -2,8 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { 
+  motion, 
+  useScroll, 
+  useMotionValueEvent,
+  useTransform,
+  AnimatePresence 
+} from "framer-motion";
+import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -15,29 +21,51 @@ const navItems = [
 ];
 
 const catalogItems = [
-  { label: "Влажная уборка", href: "/catalog/vlazhnaya-uborka" },
-  { label: "Сухая уборка", href: "/catalog/suhaya-uborka" },
-  { label: "Роботы для улицы", href: "/catalog/ulica" },
-  { label: "Доставка", href: "/catalog/dostavka" },
-  { label: "Гуманоиды", href: "/catalog/gumanoidy" },
-  { label: "Роботы для фасадов", href: "/catalog/fasady" },
-  { label: "Все категории →", href: "/catalog" },
+  { label: "Влажная уборка", href: "/catalog/vlazhnaya-uborka", icon: "💧" },
+  { label: "Сухая уборка", href: "/catalog/suhaya-uborka", icon: "🌀" },
+  { label: "Роботы для улицы", href: "/catalog/ulica", icon: "🌳" },
+  { label: "Доставка", href: "/catalog/dostavka", icon: "📦" },
+  { label: "Гуманоиды", href: "/catalog/gumanoidy", icon: "🤖" },
+  { label: "Роботы для фасадов", href: "/catalog/fasady", icon: "🏢" },
 ];
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  
+  const { scrollY } = useScroll();
+  
+  // Morphing values based on scroll
+  const headerHeight = useTransform(scrollY, [0, 100], [80, 64]);
+  const logoScale = useTransform(scrollY, [0, 100], [1, 0.85]);
+  const headerBg = useTransform(
+    scrollY, 
+    [0, 50], 
+    ["rgba(255,255,255,0)", "rgba(255,255,255,0.9)"]
+  );
+  const headerShadow = useTransform(
+    scrollY,
+    [0, 50],
+    ["0 0 0 0 transparent", "0 4px 30px -5px rgba(0,0,0,0.1)"]
+  );
+  const borderOpacity = useTransform(scrollY, [0, 50], [0, 1]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Hide/show on scroll direction
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const direction = latest > lastScrollY ? "down" : "up";
+    
+    if (direction === "down" && latest > 150 && !isMobileMenuOpen) {
+      setIsHidden(true);
+    } else {
+      setIsHidden(false);
+    }
+    
+    setLastScrollY(latest);
+  });
 
-  // Закрываем мобильное меню при ресайзе
+  // Close mobile menu on resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -48,41 +76,72 @@ export function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <>
       <motion.header
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-slate-200/50"
-            : "bg-transparent"
-        )}
+        animate={{ 
+          y: isHidden ? -100 : 0, 
+          opacity: isHidden ? 0 : 1 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        style={{
+          height: headerHeight,
+          backgroundColor: headerBg,
+          boxShadow: headerShadow,
+        }}
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+        {/* Gradient border bottom */}
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 h-px"
+          style={{ 
+            opacity: borderOpacity,
+            background: "linear-gradient(90deg, transparent, rgba(37,99,235,0.3) 20%, rgba(37,99,235,0.3) 80%, transparent)"
+          }}
+        />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="flex items-center justify-between h-full">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                style={{ scale: logoScale }}
                 className="relative"
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/25">
-                  <span className="text-white font-bold text-lg">СР</span>
+                {/* Logo with glow */}
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary via-blue-500 to-violet-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary/25">
+                    <span className="text-white font-bold text-lg">СР</span>
+                  </div>
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary to-violet-500 rounded-xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
                 </div>
-                <div className="absolute -inset-1 bg-primary/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.div>
-              <div className="hidden sm:block">
-                <span className="font-bold text-lg text-foreground">
+              
+              <motion.div 
+                className="hidden sm:block"
+                style={{ scale: logoScale }}
+              >
+                <span className="font-bold text-lg text-slate-800">
                   Современные
                 </span>
-                <span className="font-bold text-lg text-primary ml-1">
+                <span className="font-bold text-lg bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent ml-1">
                   Решения
                 </span>
-              </div>
+              </motion.div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -98,15 +157,17 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                      "text-slate-600 hover:text-primary hover:bg-primary/5",
-                      "flex items-center gap-1"
+                      "text-slate-600 hover:text-primary",
+                      "relative group flex items-center gap-1"
                     )}
                   >
-                    {item.label}
+                    {/* Hover background */}
+                    <span className="absolute inset-0 rounded-lg bg-primary/5 scale-0 group-hover:scale-100 transition-transform duration-200" />
+                    <span className="relative">{item.label}</span>
                     {item.hasDropdown && (
                       <ChevronDown 
                         className={cn(
-                          "w-4 h-4 transition-transform duration-200",
+                          "w-4 h-4 transition-transform duration-200 relative",
                           isDropdownOpen && "rotate-180"
                         )} 
                       />
@@ -121,23 +182,31 @@ export function Header() {
                           initial={{ opacity: 0, y: 10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl shadow-black/10 border border-slate-100 overflow-hidden"
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                          className="absolute top-full left-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden"
                         >
-                          <div className="p-2">
-                            {catalogItems.map((subItem, index) => (
+                          <div className="p-3">
+                            <div className="grid grid-cols-2 gap-1">
+                              {catalogItems.map((subItem) => (
+                                <Link
+                                  key={subItem.href}
+                                  href={subItem.href}
+                                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                                >
+                                  <span className="text-base">{subItem.icon}</span>
+                                  <span>{subItem.label}</span>
+                                </Link>
+                              ))}
+                            </div>
+                            <div className="mt-2 pt-2 border-t border-slate-100">
                               <Link
-                                key={subItem.href}
-                                href={subItem.href}
-                                className={cn(
-                                  "block px-4 py-3 rounded-xl text-sm transition-all duration-200",
-                                  "text-slate-600 hover:text-primary hover:bg-primary/5",
-                                  index === catalogItems.length - 1 && "font-medium text-primary"
-                                )}
+                                href="/catalog"
+                                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all duration-200"
                               >
-                                {subItem.label}
+                                <span>Все категории</span>
+                                <ArrowRight className="w-4 h-4" />
                               </Link>
-                            ))}
+                            </div>
                           </div>
                         </motion.div>
                       )}
@@ -148,14 +217,16 @@ export function Header() {
             </nav>
 
             {/* Right side */}
-            <div className="flex items-center gap-4">
-              {/* Phone - desktop */}
+            <div className="flex items-center gap-3">
+              {/* Phone */}
               <a
                 href="tel:+78002345440"
-                className="hidden md:flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-primary transition-colors"
+                className="hidden md:flex items-center gap-2 text-sm text-slate-600 hover:text-primary transition-colors"
               >
-                <Phone className="w-4 h-4" />
-                <span>+7 800 234 54 40</span>
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Phone className="w-4 h-4 text-primary" />
+                </div>
+                <span className="font-medium">+7 800 234 54 40</span>
               </a>
 
               {/* CTA Button */}
@@ -164,12 +235,15 @@ export function Header() {
                 whileTap={{ scale: 0.98 }}
                 className={cn(
                   "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl",
-                  "bg-gradient-to-r from-primary to-blue-600 text-white text-sm font-medium",
+                  "bg-gradient-to-r from-primary via-blue-500 to-violet-500 text-white text-sm font-medium",
                   "shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30",
-                  "transition-all duration-200"
+                  "transition-shadow duration-300",
+                  "relative overflow-hidden group"
                 )}
               >
-                <span>Заказать звонок</span>
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                <span className="relative">Заказать звонок</span>
               </motion.button>
 
               {/* Mobile menu button */}
@@ -178,11 +252,29 @@ export function Header() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="lg:hidden p-2 rounded-xl hover:bg-slate-100 transition-colors"
               >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6 text-slate-600" />
-                ) : (
-                  <Menu className="w-6 h-6 text-slate-600" />
-                )}
+                <AnimatePresence mode="wait">
+                  {isMobileMenuOpen ? (
+                    <motion.div
+                      key="close"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <X className="w-6 h-6 text-slate-600" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Menu className="w-6 h-6 text-slate-600" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.button>
             </div>
           </div>
@@ -199,7 +291,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 lg:hidden"
             />
 
             {/* Menu panel */}
@@ -213,18 +305,21 @@ export function Header() {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                  <span className="font-bold text-lg">Меню</span>
-                  <button
+                  <span className="font-bold text-lg bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                    Меню
+                  </span>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
                   >
                     <X className="w-5 h-5" />
-                  </button>
+                  </motion.button>
                 </div>
 
                 {/* Nav items */}
                 <nav className="flex-1 overflow-y-auto p-6">
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     {navItems.map((item, index) => (
                       <motion.div
                         key={item.href}
@@ -238,31 +333,31 @@ export function Header() {
                           className="flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:text-primary hover:bg-primary/5 transition-all"
                         >
                           <span className="font-medium">{item.label}</span>
-                          {item.hasDropdown && <ChevronDown className="w-4 h-4" />}
                         </Link>
                       </motion.div>
                     ))}
                   </div>
 
-                  {/* Catalog submenu */}
+                  {/* Catalog grid */}
                   <div className="mt-6 pt-6 border-t border-slate-100">
                     <span className="text-xs font-medium text-slate-400 uppercase tracking-wider px-4">
                       Каталог
                     </span>
-                    <div className="mt-3 space-y-1">
-                      {catalogItems.slice(0, -1).map((item, index) => (
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      {catalogItems.map((item, index) => (
                         <motion.div
                           key={item.href}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2 + index * 0.03 }}
                         >
                           <Link
                             href={item.href}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="block px-4 py-2.5 rounded-lg text-sm text-slate-500 hover:text-primary hover:bg-primary/5 transition-all"
+                            className="flex flex-col items-center gap-1 p-3 rounded-xl text-center text-sm text-slate-500 hover:text-primary hover:bg-primary/5 transition-all"
                           >
-                            {item.label}
+                            <span className="text-xl">{item.icon}</span>
+                            <span className="text-xs">{item.label}</span>
                           </Link>
                         </motion.div>
                       ))}
@@ -271,7 +366,7 @@ export function Header() {
                 </nav>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-slate-100 space-y-4">
+                <div className="p-6 border-t border-slate-100 space-y-4 bg-slate-50/50">
                   <a
                     href="tel:+78002345440"
                     className="flex items-center gap-3 text-slate-600"
@@ -285,8 +380,9 @@ export function Header() {
                     </div>
                   </a>
                   
-                  <button className="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-medium shadow-lg shadow-primary/25">
-                    Заказать звонок
+                  <button className="w-full py-3 rounded-xl bg-gradient-to-r from-primary via-blue-500 to-violet-500 text-white font-medium shadow-lg shadow-primary/25 relative overflow-hidden group">
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    <span className="relative">Заказать звонок</span>
                   </button>
                 </div>
               </div>

@@ -1,55 +1,229 @@
 import { Header } from "@/components/layout/Header";
-import { Button } from "@/components/ui/Button";
+import { CursorGlow } from "@/components/ui/CursorGlow";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { GlowCard } from "@/components/ui/GlowCard";
+import { SectionReveal, StaggerContainer, StaggerItem } from "@/components/ui/SectionReveal";
+import { Cpu, Truck, Shield, Sparkles, ArrowRight } from "lucide-react";
+
+const features = [
+  {
+    icon: Cpu,
+    title: "Официальный дистрибьютор",
+    description: "Прямые поставки от производителей. Гарантия подлинности.",
+    color: "rgba(37, 99, 235, 0.15)",
+  },
+  {
+    icon: Truck,
+    title: "Бесплатный тест-драйв",
+    description: "Протестируйте робота на вашем объекте до покупки.",
+    color: "rgba(139, 92, 246, 0.15)",
+  },
+  {
+    icon: Shield,
+    title: "Сервисный центр",
+    description: "Крупнейший в России сертифицированный сервис.",
+    color: "rgba(16, 185, 129, 0.15)",
+  },
+];
+
+const brands = [
+  { name: "Pudu", desc: "Сервисная робототехника" },
+  { name: "Viggo", desc: "Промышленная уборка" },
+  { name: "X-Human", desc: "Очистка фасадов" },
+  { name: "Yarbo", desc: "Придомовая территория" },
+];
 
 export default function Home() {
   return (
     <>
+      {/* Global effects */}
+      <CursorGlow />
+      <ScrollProgress />
       <Header />
       
-      <main className="min-h-screen">
-        {/* Hero - временная заглушка */}
-        <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-6">
-              <span className="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-                Роботы для
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-                бизнеса
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-slate-500 mb-8 max-w-2xl mx-auto">
-              Первый в России центр интеграции промышленных и коммерческих роботов
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg">
-                Смотреть каталог
-              </Button>
-              <Button variant="outline" size="lg">
-                Рассчитать окупаемость
-              </Button>
-            </div>
+      <main className="min-h-screen bg-white">
+        {/* Hero Section */}
+        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+          {/* Background gradient blobs */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/4 -left-1/4 w-1/2 h-1/2 bg-gradient-to-br from-primary/10 to-violet-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-gradient-to-br from-blue-500/10 to-emerald-500/10 rounded-full blur-3xl" />
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <SectionReveal delay={0.1}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-sm text-primary mb-8">
+                <Sparkles className="w-4 h-4" />
+                <span>Первый в России центр интеграции роботов</span>
+              </div>
+            </SectionReveal>
             
-            {/* Статус разработки */}
-            <div className="mt-16 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-md mx-auto">
-              <p className="text-sm text-slate-500">
-                🚧 Сайт в разработке по методологии Forja
+            <SectionReveal delay={0.2}>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+                <span className="text-slate-800">Роботы для</span>
+                <br />
+                <span className="bg-gradient-to-r from-primary via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+                  бизнеса
+                </span>
+              </h1>
+            </SectionReveal>
+            
+            <SectionReveal delay={0.3}>
+              <p className="text-lg sm:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Автоматизируйте уборку, доставку и обслуживание с помощью 
+                промышленных роботов от мировых лидеров
               </p>
-              <p className="text-xs text-slate-400 mt-2">
-                ✓ setup • ✓ header • → footer, hero, partners...
-              </p>
-            </div>
+            </SectionReveal>
+            
+            <SectionReveal delay={0.4}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <MagneticButton variant="primary" size="lg" href="/catalog">
+                  Смотреть каталог
+                  <ArrowRight className="w-5 h-5" />
+                </MagneticButton>
+                <MagneticButton variant="outline" size="lg" href="/calculator">
+                  Рассчитать окупаемость
+                </MagneticButton>
+              </div>
+            </SectionReveal>
+            
+            {/* Scroll indicator */}
+            <SectionReveal delay={0.6}>
+              <div className="mt-16 flex flex-col items-center gap-2 text-slate-400">
+                <span className="text-sm">Листайте вниз</span>
+                <div className="w-6 h-10 rounded-full border-2 border-slate-300 flex justify-center pt-2">
+                  <div className="w-1.5 h-3 bg-slate-400 rounded-full animate-bounce" />
+                </div>
+              </div>
+            </SectionReveal>
           </div>
         </section>
-        
-        {/* Пустые секции для тестирования скролла */}
-        <section className="h-screen bg-slate-50 flex items-center justify-center">
-          <p className="text-slate-400">Секция 2 — проверка скролла header</p>
+
+        {/* Features Section */}
+        <section className="py-24 bg-slate-50/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionReveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+                  Почему выбирают нас
+                </h2>
+                <p className="text-slate-500 max-w-2xl mx-auto">
+                  Комплексный подход к автоматизации вашего бизнеса
+                </p>
+              </div>
+            </SectionReveal>
+            
+            <StaggerContainer className="grid md:grid-cols-3 gap-6" staggerDelay={0.15}>
+              {features.map((feature) => (
+                <StaggerItem key={feature.title}>
+                  <GlowCard glowColor={feature.color} className="h-full">
+                    <div className="p-8">
+                      <div 
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
+                        style={{ backgroundColor: feature.color }}
+                      >
+                        <feature.icon className="w-7 h-7 text-slate-700" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-slate-800 mb-3">
+                        {feature.title}
+                      </h3>
+                      <p className="text-slate-500 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </GlowCard>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
         </section>
-        
-        <section className="h-screen bg-white flex items-center justify-center">
-          <p className="text-slate-400">Секция 3 — проверка скролла header</p>
+
+        {/* Brands Section */}
+        <section className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionReveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+                  Наши партнёры
+                </h2>
+                <p className="text-slate-500">
+                  Официальный дистрибьютор ведущих производителей
+                </p>
+              </div>
+            </SectionReveal>
+            
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4" staggerDelay={0.1}>
+              {brands.map((brand) => (
+                <StaggerItem key={brand.name}>
+                  <GlowCard hoverScale={1.03}>
+                    <div className="p-6 text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-slate-400">
+                          {brand.name[0]}
+                        </span>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-1">{brand.name}</h3>
+                      <p className="text-sm text-slate-500">{brand.desc}</p>
+                    </div>
+                  </GlowCard>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+          {/* Gradient orbs */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
+          
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <SectionReveal>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+                Готовы автоматизировать
+                <br />
+                <span className="bg-gradient-to-r from-primary via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                  ваш бизнес?
+                </span>
+              </h2>
+            </SectionReveal>
+            
+            <SectionReveal delay={0.1}>
+              <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+                Получите бесплатную консультацию и расчёт окупаемости 
+                для вашего объекта
+              </p>
+            </SectionReveal>
+            
+            <SectionReveal delay={0.2}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <MagneticButton variant="primary" size="lg">
+                  Заказать консультацию
+                </MagneticButton>
+                <MagneticButton 
+                  variant="ghost" 
+                  size="lg" 
+                  className="text-white hover:text-white hover:bg-white/10"
+                >
+                  +7 800 234 54 40
+                </MagneticButton>
+              </div>
+            </SectionReveal>
+          </div>
+        </section>
+
+        {/* Dev status */}
+        <section className="py-12 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 text-center">
+            <p className="text-sm text-slate-500">
+              🚧 Сайт в разработке по методологии Forja | Clean Tech Style
+            </p>
+            <p className="text-xs text-slate-400 mt-2">
+              ✓ CursorGlow • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal • ✓ Morphing Header
+            </p>
+          </div>
         </section>
       </main>
     </>
