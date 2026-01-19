@@ -279,7 +279,7 @@ validation:
 # ============================================
 runtime:
   status: "idle"
-  current_level: 0
+  current_level: 1
   
   blocks:
     setup:
