@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+:root {
+  /* Основные цвета (светлая тема b2b-robotics.ru) */
+  --background: #ffffff;
+  --foreground: #1a1a2e;
+  
+  /* Акценты - синий как на текущем сайте */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #3b82f6;
+  
+  /* Серые оттенки */
+  --secondary: #64748b;
+  --muted: #94a3b8;
+  
+  /* Поверхности */
+  --card: #f8fafc;
+  --card-hover: #f1f5f9;
+  --card-border: #e2e8f0;
+  
+  /* Текст */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  /* Успех/Ошибка */
+  --success: #22c55e;
+  --error: #ef4444;
+  
+  /* Градиенты */
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  --gradient-dark: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+}
+
+/* Убираем тёмную тему - используем только светлую */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Базовые стили для секций */
+.section {
+  @apply py-16 md:py-24;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Плавные переходы */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Скролл плавный */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
