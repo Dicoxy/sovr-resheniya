@@ -1,0 +1,61 @@
+version: "0.3"
+
+block:
+  id: "hero"
+  name: "Hero с видео-эффектом"
+  description: |
+    Главный экран с видео Pudu.
+    Эффект: статичный баннер → fade → проступает видео.
+
+input:
+  from_blocks:
+    - source_block: "header"
+      source_output: "navigation_ready"
+      required: true
+
+output:
+  exports:
+    - name: "hero_rendered"
+      type: "boolean"
+  artifacts:
+    - path: "components/sections/Hero.tsx"
+    - path: "components/sections/HeroVideo.tsx"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Hero рендерится"
+    - id: "video_effect"
+      description: "Видео-эффект работает (fade transition)"
+    - id: "responsive"
+      description: "Адаптив: текст читаем на всех экранах"
+    - id: "cta_visible"
+      description: "CTA кнопки видны и кликабельны"
+
+content:
+  headline: "Роботы для бизнеса"
+  subheadline: "Первый в России центр интеграции промышленных и коммерческих роботов"
+  cta_primary:
+    label: "Смотреть каталог"
+    href: "/catalog"
+  cta_secondary:
+    label: "Рассчитать окупаемость"
+    href: "/calculator"
+
+effect:
+  sequence:
+    - step: 1
+      description: "Показываем статичное изображение робота"
+      duration: "2s"
+    - step: 2
+      description: "Плавный fade-out изображения"
+      duration: "1s"
+    - step: 3
+      description: "Проступает затемнённое видео"
+    - step: 4
+      description: "Видео играет на loop, muted"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 15
+  priority: "high"

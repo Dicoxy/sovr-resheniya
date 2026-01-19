@@ -1,0 +1,71 @@
+version: "0.3"
+
+block:
+  id: "mars_showcase"
+  name: "MARS-витрина"
+  description: |
+    Демонстрация системы управления флотом роботов MARS.
+    Скриншоты, видео, описание возможностей.
+
+input:
+  from_blocks:
+    - source_block: "setup"
+      source_output: "app_ready"
+      required: true
+
+output:
+  exports:
+    - name: "mars_rendered"
+      type: "boolean"
+  artifacts:
+    - path: "components/features/MarsShowcase.tsx"
+    - path: "app/mars/page.tsx"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Секция рендерится"
+    - id: "visuals"
+      description: "Скриншоты/видео отображаются"
+    - id: "features"
+      description: "Возможности описаны"
+    - id: "cta"
+      description: "CTA на демо/консультацию"
+    - id: "responsive"
+      description: "Адаптив работает"
+
+content:
+  headline: "MARS — система управления флотом"
+  subheadline: "Единая платформа для мониторинга и управления всеми роботами"
+  features:
+    - icon: "monitor"
+      title: "Мониторинг в реальном времени"
+      description: "Отслеживайте статус и местоположение каждого робота"
+    - icon: "calendar"
+      title: "Планирование задач"
+      description: "Создавайте расписания уборки, маршруты доставки"
+    - icon: "bar-chart-2"
+      title: "Аналитика и отчёты"
+      description: "Статистика эффективности, отчёты для руководства"
+    - icon: "bell"
+      title: "Уведомления"
+      description: "Оповещения о событиях, ошибках, завершении задач"
+    - icon: "map"
+      title: "Мульти-объекты"
+      description: "Управляйте роботами на разных объектах"
+    - icon: "smartphone"
+      title: "Мобильное приложение"
+      description: "Контроль с телефона в любое время"
+
+cta:
+  primary:
+    label: "Запросить демо"
+    action: "open_form"
+
+related:
+  weeek_project: 46
+
+execution:
+  max_retries: 2
+  timeout_minutes: 15
+  priority: "medium"

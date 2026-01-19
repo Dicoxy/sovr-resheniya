@@ -1,0 +1,64 @@
+version: "0.3"
+
+block:
+  id: "footer"
+  name: "Footer"
+  description: |
+    Подвал сайта с навигацией, контактами, соцсетями.
+
+input:
+  from_blocks:
+    - source_block: "setup"
+      source_output: "app_ready"
+      required: true
+
+output:
+  exports:
+    - name: "footer_rendered"
+      type: "boolean"
+  artifacts:
+    - path: "components/layout/Footer.tsx"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Footer рендерится"
+    - id: "links_work"
+      description: "Все ссылки работают"
+    - id: "responsive"
+      description: "Адаптив: колонки → стек"
+
+content:
+  columns:
+    - title: "Каталог"
+      links:
+        - label: "Влажная уборка"
+          href: "/catalog/vlazhnaya-uborka"
+        - label: "Сухая уборка"
+          href: "/catalog/suhaya-uborka"
+        - label: "Все категории"
+          href: "/catalog"
+    - title: "Компания"
+      links:
+        - label: "О нас"
+          href: "/about"
+        - label: "MARS"
+          href: "/mars"
+        - label: "Контакты"
+          href: "/contacts"
+    - title: "Контакты"
+      content:
+        - type: "phone"
+          value: "+7 800 234 54 40"
+        - type: "email"
+          value: "info@b2b-robotics.ru"
+  copyright: "© 2026 ООО «Современные Решения». Все права защищены."
+
+design:
+  background: "var(--foreground)"
+  text_color: "#ffffff"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 10
+  priority: "medium"

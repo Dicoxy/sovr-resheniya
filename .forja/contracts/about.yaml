@@ -1,0 +1,65 @@
+version: "0.3"
+
+block:
+  id: "about"
+  name: "О компании + УТП"
+  description: |
+    Информация о компании и уникальные торговые предложения.
+    3 карточки УТП.
+
+input:
+  from_blocks:
+    - source_block: "setup"
+      source_output: "app_ready"
+      required: true
+
+output:
+  exports:
+    - name: "about_rendered"
+      type: "boolean"
+  artifacts:
+    - path: "components/sections/About.tsx"
+    - path: "components/sections/USPCards.tsx"
+    - path: "app/about/page.tsx"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Секция рендерится"
+    - id: "usp_cards"
+      description: "3 карточки УТП отображаются"
+    - id: "responsive"
+      description: "Адаптив работает"
+    - id: "animations"
+      description: "Анимации при скролле"
+
+content:
+  headline: "Первый в России центр интеграции роботов"
+  description: |
+    ООО «Современные Решения» — официальный дистрибьютор ведущих 
+    мировых производителей промышленных и коммерческих роботов.
+  usp:
+    - id: "distributor"
+      icon: "award"
+      title: "Официальный дистрибьютор"
+      description: "Прямые поставки от производителей. Гарантия подлинности и лучшие цены."
+    - id: "test_drive"
+      icon: "play-circle"
+      title: "Бесплатный тест-драйв"
+      description: "Протестируйте робота на вашем объекте до покупки."
+    - id: "service"
+      icon: "shield-check"
+      title: "Сервисный центр"
+      description: "Крупнейший в России сертифицированный сервис."
+
+design:
+  layout: "two_columns"
+  usp_card:
+    icon_size: "48px"
+    icon_color: "var(--primary)"
+    hover: "translateY(-4px) + shadow"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 10
+  priority: "medium"

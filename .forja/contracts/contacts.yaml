@@ -1,0 +1,80 @@
+version: "0.3"
+
+block:
+  id: "contacts"
+  name: "Контакты + форма заявки"
+  description: |
+    Контактная информация и форма для заявок.
+
+input:
+  from_blocks:
+    - source_block: "setup"
+      source_output: "app_ready"
+      required: true
+
+output:
+  exports:
+    - name: "form_action"
+      type: "function"
+      description: "Server Action для отправки формы"
+  artifacts:
+    - path: "components/sections/Contacts.tsx"
+    - path: "components/forms/ContactForm.tsx"
+    - path: "app/contacts/page.tsx"
+    - path: "app/actions/contact.ts"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Секция рендерится"
+    - id: "form_works"
+      description: "Форма отправляется"
+    - id: "validation"
+      description: "Валидация полей работает"
+    - id: "feedback"
+      description: "Показывается статус отправки"
+    - id: "responsive"
+      description: "Адаптив работает"
+
+content:
+  headline: "Свяжитесь с нами"
+  contacts:
+    phone:
+      value: "+7 800 234 54 40"
+      label: "Бесплатный звонок по России"
+    email:
+      value: "info@b2b-robotics.ru"
+
+form:
+  fields:
+    - name: "name"
+      type: "text"
+      label: "Ваше имя"
+      required: true
+    - name: "phone"
+      type: "tel"
+      label: "Телефон"
+      required: true
+    - name: "email"
+      type: "email"
+      label: "Email"
+      required: false
+    - name: "message"
+      type: "textarea"
+      label: "Сообщение"
+      required: false
+  submit:
+    label: "Отправить заявку"
+  success_message: "Спасибо! Мы свяжемся с вами в ближайшее время."
+
+design:
+  layout: "two_columns"
+  form_side:
+    background: "var(--card)"
+    padding: "32px"
+    border_radius: "16px"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 15
+  priority: "high"

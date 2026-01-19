@@ -1,0 +1,346 @@
+version: "0.3"
+
+# ============================================
+# МЕТАДАННЫЕ ПРОЕКТА
+# ============================================
+project:
+  id: "sovr-resheniya"
+  name: "Современные Решения"
+  description: |
+    Сайт дистрибьютора промышленных и коммерческих роботов.
+    Миграция с Битрикса на Next.js.
+    Бренды: Pudu, Viggo, X-Human, Yarbo.
+  domain: "b2b-robotics.ru"
+  created_at: "2026-01-19T21:00:00Z"
+  updated_at: "2026-01-19T21:00:00Z"
+
+# ============================================
+# ИСХОДНАЯ ИДЕЯ
+# ============================================
+idea:
+  raw: |
+    Миграция сайта дистрибьютора роботов с Битрикса на Next.js.
+    Современный дизайн, быстрый, с ROI-калькулятором и витриной MARS.
+    Светлая тема с синими/серыми акцентами.
+    Супер-современный, с интересными переходами и анимациями.
+  interpreted: |
+    Цель: Заменить тяжёлый Битрикс на быстрый Next.js
+    
+    Функционал:
+    - Каталог роботов (~20 товаров, 7 категорий)
+    - Информация о компании и УТП
+    - ROI-калькулятор для расчёта окупаемости
+    - Витрина системы MARS (управление флотом)
+    - Формы заявок с интеграцией в CRM
+    
+    Дизайн:
+    - Светлая тема (как текущий сайт)
+    - Синие/серые акценты
+    - Современные анимации и переходы
+    - Mobile-first
+    
+    Будущее:
+    - AI чат-консультант
+    - Telegram-бот
+    - Личный кабинет клиента
+    - Чат-CMS (Forja)
+  validated: true
+
+# ============================================
+# РЕФЕРЕНСЫ
+# ============================================
+references:
+  content:
+    - url: "https://b2b-robotics.ru"
+      description: "Текущий сайт — структура и контент"
+  style:
+    - url: "https://systech-team.ru"
+      description: "Технологичный стиль, анимации"
+  brands:
+    - name: "Pudu"
+      description: "Мировой лидер в сервисной робототехнике"
+    - name: "Viggo"
+      description: "Автономные поломоечные промышленные роботы"
+    - name: "X-Human"
+      description: "Решения для очистки фасадов и окон"
+    - name: "Yarbo"
+      description: "Модульные роботы для придомовой территории"
+
+# ============================================
+# CONSTITUTION
+# ============================================
+constitution:
+  path: "./.forja/constitution.md"
+
+# ============================================
+# АРХИТЕКТУРА
+# ============================================
+architecture:
+  total_levels: 5
+  total_blocks: 10
+  
+  blocks:
+    # === Level 0: Инфраструктура ===
+    - id: "setup"
+      name: "Инициализация проекта"
+      level: 0
+      contract: "./.forja/contracts/setup.yaml"
+      depends_on: []
+      github_issue: 1
+      
+    # === Level 1: Каркас ===
+    - id: "header"
+      name: "Header + навигация"
+      level: 1
+      contract: "./.forja/contracts/header.yaml"
+      depends_on:
+        - block: "setup"
+          required_output: "app_ready"
+      github_issue: 2
+      
+    - id: "footer"
+      name: "Footer"
+      level: 1
+      contract: "./.forja/contracts/footer.yaml"
+      depends_on:
+        - block: "setup"
+          required_output: "app_ready"
+      github_issue: 10
+      
+    # === Level 2: Простые секции ===
+    - id: "hero"
+      name: "Hero с видео-эффектом"
+      level: 2
+      contract: "./.forja/contracts/hero.yaml"
+      depends_on:
+        - block: "header"
+          required_output: "navigation_ready"
+      github_issue: 3
+      
+    - id: "partners"
+      name: "Партнёры (бренды)"
+      level: 2
+      contract: "./.forja/contracts/partners.yaml"
+      depends_on:
+        - block: "setup"
+          required_output: "app_ready"
+      github_issue: 5
+      
+    - id: "about"
+      name: "О компании + УТП"
+      level: 2
+      contract: "./.forja/contracts/about.yaml"
+      depends_on:
+        - block: "setup"
+          required_output: "app_ready"
+      github_issue: 8
+      
+    - id: "contacts"
+      name: "Контакты + форма заявки"
+      level: 2
+      contract: "./.forja/contracts/contacts.yaml"
+      depends_on:
+        - block: "setup"
+          required_output: "app_ready"
+      github_issue: 9
+      
+    # === Level 3: Каталог ===
+    - id: "catalog"
+      name: "Каталог роботов"
+      level: 3
+      contract: "./.forja/contracts/catalog.yaml"
+      depends_on:
+        - block: "header"
+          required_output: "navigation_ready"
+        - block: "partners"
+          required_output: "brands_data"
+      github_issue: 4
+      
+    # === Level 4: Интерактивные фичи ===
+    - id: "roi_calculator"
+      name: "ROI-калькулятор"
+      level: 4
+      contract: "./.forja/contracts/roi_calculator.yaml"
+      depends_on:
+        - block: "catalog"
+          required_output: "products_data"
+      github_issue: 6
+      
+    - id: "mars_showcase"
+      name: "MARS-витрина"
+      level: 4
+      contract: "./.forja/contracts/mars_showcase.yaml"
+      depends_on:
+        - block: "setup"
+          required_output: "app_ready"
+      github_issue: 7
+
+# ============================================
+# FLOW
+# ============================================
+flow:
+  diagram: |
+    Level 0:           [setup]
+                          ↓
+    Level 1:     [header]   [footer]
+                    ↓
+    Level 2:  [hero] [partners] [about] [contacts]
+                         ↓
+    Level 3:         [catalog]
+                         ↓
+    Level 4:  [roi_calculator] [mars_showcase]
+  
+  parallel_groups:
+    - level: 0
+      blocks: ["setup"]
+      note: "Инициализация Next.js, зависимостей, базовых стилей"
+    - level: 1
+      blocks: ["header", "footer"]
+      note: "Каркас сайта, параллельно"
+    - level: 2
+      blocks: ["hero", "partners", "about", "contacts"]
+      note: "Простые секции, можно параллельно"
+    - level: 3
+      blocks: ["catalog"]
+      note: "Каталог зависит от данных брендов"
+    - level: 4
+      blocks: ["roi_calculator", "mars_showcase"]
+      note: "Интерактивные фичи в конце"
+
+# ============================================
+# СТРАНИЦЫ
+# ============================================
+pages:
+  - path: "/"
+    name: "Главная"
+    blocks: ["header", "hero", "partners", "about", "catalog", "contacts", "footer"]
+    
+  - path: "/catalog"
+    name: "Каталог"
+    blocks: ["header", "catalog", "footer"]
+    
+  - path: "/catalog/[category]"
+    name: "Категория"
+    blocks: ["header", "catalog", "footer"]
+    
+  - path: "/catalog/[category]/[slug]"
+    name: "Товар"
+    blocks: ["header", "catalog", "footer"]
+    
+  - path: "/calculator"
+    name: "ROI-калькулятор"
+    blocks: ["header", "roi_calculator", "footer"]
+    
+  - path: "/mars"
+    name: "MARS"
+    blocks: ["header", "mars_showcase", "footer"]
+    
+  - path: "/about"
+    name: "О компании"
+    blocks: ["header", "about", "contacts", "footer"]
+    
+  - path: "/contacts"
+    name: "Контакты"
+    blocks: ["header", "contacts", "footer"]
+
+# ============================================
+# VALIDATION GATES
+# ============================================
+validation:
+  plan:
+    status: "approved"
+    approved_by: "human"
+    approved_at: "2026-01-19T21:00:00Z"
+    notes: "MVP версия, AI-фичи в следующей итерации"
+  
+  gates:
+    - after_level: 0
+      type: "automatic"
+      criteria: "npm run dev работает, базовые стили применены"
+      
+    - after_level: 1
+      type: "automatic"
+      criteria: "Header и Footer рендерятся, навигация работает"
+      
+    - after_level: 2
+      type: "human"
+      criteria: "Визуальная проверка секций, соответствие дизайну"
+      
+    - after_level: 3
+      type: "automatic"
+      criteria: "Каталог отображает товары, категории работают"
+      
+    - after_level: 4
+      type: "human"
+      criteria: "Калькулятор считает, MARS отображается"
+
+# ============================================
+# RUNTIME STATE
+# ============================================
+runtime:
+  status: "idle"
+  current_level: 0
+  
+  blocks:
+    setup:
+      status: "pending"
+    header:
+      status: "pending"
+    footer:
+      status: "pending"
+    hero:
+      status: "pending"
+    partners:
+      status: "pending"
+    about:
+      status: "pending"
+    contacts:
+      status: "pending"
+    catalog:
+      status: "pending"
+    roi_calculator:
+      status: "pending"
+    mars_showcase:
+      status: "pending"
+  
+  errors: []
+
+# ============================================
+# INTEGRATIONS (будущее)
+# ============================================
+integrations:
+  crm:
+    provider: "amocrm"
+    status: "planned"
+    
+  analytics:
+    - provider: "yandex_metrika"
+      status: "planned"
+    - provider: "google_analytics"
+      status: "planned"
+      
+  notifications:
+    - provider: "telegram"
+      status: "planned"
+      description: "Уведомления о заявках"
+      
+  ai:
+    - feature: "chat_consultant"
+      status: "phase_2"
+      description: "AI-консультант на сайте"
+    - feature: "telegram_bot"
+      status: "phase_2"
+      description: "Бот-консультант в Telegram"
+
+# ============================================
+# FORJA CMS (будущее)
+# ============================================
+forja:
+  enabled: false
+  editable_blocks:
+    - "hero"
+    - "partners"
+    - "about"
+    - "contacts"
+    - "catalog"
+  status: "phase_3"

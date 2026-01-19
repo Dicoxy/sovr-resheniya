@@ -1,0 +1,79 @@
+version: "0.3"
+
+block:
+  id: "roi_calculator"
+  name: "ROI-калькулятор"
+  description: |
+    Интерактивный калькулятор окупаемости роботов.
+    Сравнение с ручным трудом, расчёт экономии.
+
+input:
+  from_blocks:
+    - source_block: "catalog"
+      source_output: "products_data"
+      required: true
+
+output:
+  exports:
+    - name: "calculator_rendered"
+      type: "boolean"
+  artifacts:
+    - path: "components/features/ROICalculator.tsx"
+    - path: "app/calculator/page.tsx"
+    - path: "lib/roi-calculations.ts"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Калькулятор рендерится"
+    - id: "calculations"
+      description: "Расчёты работают корректно"
+    - id: "result_display"
+      description: "Результат отображается наглядно"
+    - id: "lead_capture"
+      description: "Можно запросить детальный расчёт"
+    - id: "responsive"
+      description: "Адаптив работает"
+
+calculator:
+  inputs:
+    - name: "business_type"
+      type: "select"
+      label: "Тип бизнеса"
+      options:
+        - value: "retail"
+          label: "Торговый центр"
+        - value: "warehouse"
+          label: "Склад"
+        - value: "hotel"
+          label: "Отель"
+        - value: "restaurant"
+          label: "Ресторан"
+    - name: "area"
+      type: "number"
+      label: "Площадь (м²)"
+      min: 100
+      max: 100000
+    - name: "robot_type"
+      type: "select"
+      label: "Тип робота"
+      options:
+        - value: "scrubber"
+          label: "Поломоечный"
+        - value: "vacuum"
+          label: "Пылесос"
+  outputs:
+    - name: "payback_months"
+      label: "Срок окупаемости"
+    - name: "annual_savings"
+      label: "Экономия в год"
+
+cta:
+  primary:
+    label: "Получить детальный расчёт"
+    action: "open_form"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 20
+  priority: "medium"

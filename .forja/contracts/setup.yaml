@@ -1,0 +1,54 @@
+version: "0.3"
+
+block:
+  id: "setup"
+  name: "Инициализация проекта"
+  description: |
+    Создание базовой структуры Next.js проекта.
+    Установка зависимостей, настройка Tailwind, базовые стили.
+
+input:
+  from_blocks: []
+  from_environment:
+    - name: "project_name"
+      type: "string"
+      value: "sovr-resheniya"
+
+output:
+  exports:
+    - name: "app_ready"
+      type: "boolean"
+      description: "Проект инициализирован и запускается"
+    - name: "base_styles"
+      type: "object"
+      description: "CSS переменные и базовые стили из constitution"
+  artifacts:
+    - path: "package.json"
+    - path: "tsconfig.json"
+    - path: "tailwind.config.ts"
+    - path: "app/layout.tsx"
+    - path: "app/page.tsx"
+    - path: "app/globals.css"
+    - path: "lib/utils.ts"
+    - path: "Dockerfile"
+
+success_criteria:
+  required:
+    - id: "npm_install"
+      description: "Зависимости установлены без ошибок"
+    - id: "dev_server"
+      description: "Dev сервер запускается"
+    - id: "typescript"
+      description: "TypeScript компилируется"
+    - id: "base_styles"
+      description: "Цветовая схема из constitution применена"
+
+implementation:
+  commands:
+    - "npx create-next-app@latest . --typescript --tailwind --app --src-dir=false"
+    - "npm install framer-motion lucide-react"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 15
+  priority: "critical"

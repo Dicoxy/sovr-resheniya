@@ -1,0 +1,64 @@
+version: "0.3"
+
+block:
+  id: "partners"
+  name: "Партнёры (бренды)"
+  description: |
+    Секция с логотипами брендов-партнёров.
+    Pudu, Viggo, X-Human, Yarbo.
+
+input:
+  from_blocks:
+    - source_block: "setup"
+      source_output: "app_ready"
+      required: true
+
+output:
+  exports:
+    - name: "brands_data"
+      type: "array"
+      description: "Данные о брендах для использования в каталоге"
+  artifacts:
+    - path: "components/sections/Partners.tsx"
+    - path: "data/brands.json"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Секция рендерится"
+    - id: "logos_visible"
+      description: "Все 4 логотипа отображаются"
+    - id: "hover_effect"
+      description: "Hover эффект на логотипах"
+    - id: "responsive"
+      description: "Адаптив: 4 в ряд → 2 в ряд"
+
+brands:
+  - id: "pudu"
+    name: "Pudu"
+    description: "Мировой лидер в сервисной робототехнике"
+  - id: "viggo"
+    name: "Viggo"
+    description: "Автономные поломоечные промышленные роботы"
+  - id: "xhuman"
+    name: "X-Human"
+    description: "Решения для очистки фасадов и окон"
+  - id: "yarbo"
+    name: "Yarbo"
+    description: "Модульные роботы для придомовой территории"
+
+design:
+  layout: "grid"
+  columns:
+    desktop: 4
+    tablet: 2
+    mobile: 2
+  card:
+    hover: "scale(1.02) + shadow"
+  logo:
+    filter: "grayscale on idle, color on hover"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 10
+  priority: "medium"

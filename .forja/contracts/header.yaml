@@ -1,0 +1,61 @@
+version: "0.3"
+
+block:
+  id: "header"
+  name: "Header + навигация"
+  description: |
+    Шапка сайта с логотипом, навигацией и кнопкой CTA.
+    Sticky при скролле, мобильное меню.
+
+input:
+  from_blocks:
+    - source_block: "setup"
+      source_output: "app_ready"
+      required: true
+  from_environment:
+    - name: "phone"
+      type: "string"
+      value: "+7 800 234 54 40"
+
+output:
+  exports:
+    - name: "navigation_ready"
+      type: "boolean"
+    - name: "nav_items"
+      type: "array"
+  artifacts:
+    - path: "components/layout/Header.tsx"
+    - path: "components/layout/MobileMenu.tsx"
+
+success_criteria:
+  required:
+    - id: "renders"
+      description: "Header рендерится без ошибок"
+    - id: "sticky"
+      description: "Прилипает при скролле"
+    - id: "mobile_menu"
+      description: "Бургер меню работает на мобильных"
+    - id: "responsive"
+      description: "Адаптив: mobile, tablet, desktop"
+
+elements:
+  navigation:
+    items:
+      - label: "Каталог"
+        href: "/catalog"
+      - label: "Калькулятор"
+        href: "/calculator"
+      - label: "MARS"
+        href: "/mars"
+      - label: "О нас"
+        href: "/about"
+      - label: "Контакты"
+        href: "/contacts"
+  cta:
+    label: "Заказать звонок"
+    action: "open_modal"
+
+execution:
+  max_retries: 2
+  timeout_minutes: 10
+  priority: "high"

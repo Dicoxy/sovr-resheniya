@@ -1,0 +1,82 @@
+version: "0.3"
+
+block:
+  id: "catalog"
+  name: "Каталог роботов"
+  description: |
+    Каталог товаров с категориями.
+    ~20 товаров в 7 категориях.
+
+input:
+  from_blocks:
+    - source_block: "header"
+      source_output: "navigation_ready"
+      required: true
+    - source_block: "partners"
+      source_output: "brands_data"
+      required: true
+
+output:
+  exports:
+    - name: "products_data"
+      type: "array"
+      description: "Данные о товарах для ROI-калькулятора"
+  artifacts:
+    - path: "components/sections/Catalog.tsx"
+    - path: "components/catalog/CategoryGrid.tsx"
+    - path: "components/catalog/ProductCard.tsx"
+    - path: "components/catalog/ProductDetail.tsx"
+    - path: "app/catalog/page.tsx"
+    - path: "app/catalog/[category]/page.tsx"
+    - path: "app/catalog/[category]/[slug]/page.tsx"
+    - path: "data/products.json"
+    - path: "data/categories.json"
+
+success_criteria:
+  required:
+    - id: "categories_render"
+      description: "Все 7 категорий отображаются"
+    - id: "products_render"
+      description: "Товары в категориях отображаются"
+    - id: "product_page"
+      description: "Страница товара открывается по slug"
+    - id: "responsive"
+      description: "Сетка адаптируется под экран"
+
+categories:
+  - id: "wet_cleaning"
+    name: "Роботы для влажной уборки"
+    slug: "vlazhnaya-uborka"
+  - id: "dry_cleaning"
+    name: "Роботы для сухой уборки"
+    slug: "suhaya-uborka"
+  - id: "outdoor"
+    name: "Роботы для улицы"
+    slug: "ulica"
+  - id: "humanoids"
+    name: "Гуманоиды"
+    slug: "gumanoidy"
+  - id: "delivery"
+    name: "Роботы для доставки"
+    slug: "dostavka"
+  - id: "facades"
+    name: "Роботы для фасадов"
+    slug: "fasady"
+  - id: "accessories"
+    name: "Аксессуары"
+    slug: "aksessuary"
+
+design:
+  category_grid:
+    columns:
+      desktop: 4
+      tablet: 3
+      mobile: 2
+  product_card:
+    image_ratio: "4:3"
+    hover: "scale + shadow"
+
+execution:
+  max_retries: 3
+  timeout_minutes: 30
+  priority: "high"
