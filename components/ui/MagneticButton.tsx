@@ -49,20 +49,17 @@ export function MagneticButton({
   const baseStyles = cn(
     "relative inline-flex items-center justify-center font-medium rounded-xl",
     "transition-all duration-200 overflow-hidden",
-    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50",
+    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-navy)]/30",
     "disabled:opacity-50 disabled:cursor-not-allowed",
-    // Glow effect on hover
-    "before:absolute before:inset-0 before:rounded-xl before:opacity-0",
-    "before:transition-opacity before:duration-300 hover:before:opacity-100",
     {
-      // Variants
-      "bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 before:bg-gradient-to-r before:from-primary before:to-blue-500":
+      // Variants - updated to navy/cyan palette
+      "bg-[var(--color-navy)] text-white shadow-lg shadow-[var(--color-navy)]/20 hover:shadow-xl hover:shadow-[var(--color-navy)]/25 hover:bg-[var(--color-navy-light)]":
         variant === "primary",
-      "bg-slate-800 text-white shadow-lg shadow-slate-800/20 hover:shadow-xl hover:shadow-slate-800/30 before:bg-gradient-to-r before:from-slate-700 before:to-slate-600":
+      "bg-slate-800 text-white shadow-lg shadow-slate-800/20 hover:shadow-xl hover:shadow-slate-800/30 hover:bg-slate-700":
         variant === "secondary",
-      "border-2 border-primary/20 text-primary hover:border-primary/40 hover:bg-primary/5 before:bg-primary/5":
+      "border-2 border-slate-200 text-slate-700 hover:border-[var(--color-navy)]/30 hover:bg-[var(--color-navy)]/5":
         variant === "outline",
-      "text-slate-600 hover:text-primary hover:bg-primary/5 before:bg-primary/5":
+      "text-slate-600 hover:text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5":
         variant === "ghost",
       // Sizes
       "px-4 py-2 text-sm": size === "sm",

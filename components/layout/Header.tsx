@@ -40,7 +40,7 @@ export function Header() {
   
   // Morphing values based on scroll
   const headerHeight = useTransform(scrollY, [0, 100], [80, 64]);
-  const logoScale = useTransform(scrollY, [0, 100], [1, 0.9]);
+  const logoScale = useTransform(scrollY, [0, 100], [1, 0.92]);
   const headerBg = useTransform(
     scrollY, 
     [0, 50], 
@@ -110,25 +110,29 @@ export function Header() {
           className="absolute bottom-0 left-0 right-0 h-px"
           style={{ 
             opacity: borderOpacity,
-            background: "linear-gradient(90deg, transparent, rgba(30,58,95,0.2) 20%, rgba(0,212,170,0.3) 50%, rgba(30,58,95,0.2) 80%, transparent)"
+            background: "linear-gradient(90deg, transparent, rgba(30,58,95,0.15) 20%, rgba(0,212,170,0.2) 50%, rgba(30,58,95,0.15) 80%, transparent)"
           }}
         />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
-            {/* Logo */}
+            {/* Logo - responsive */}
             <motion.div style={{ scale: logoScale }}>
-              <Logo 
-                variant="full" 
-                size="md" 
-                showText={true}
-                className="hidden sm:flex"
-              />
-              <Logo 
-                variant="symbol" 
-                size="md"
-                className="sm:hidden"
-              />
+              {/* Desktop: full logo */}
+              <div className="hidden sm:block">
+                <Logo 
+                  variant="full" 
+                  size="responsive"
+                  showText={true}
+                />
+              </div>
+              {/* Mobile: symbol only */}
+              <div className="sm:hidden">
+                <Logo 
+                  variant="symbol" 
+                  size="md"
+                />
+              </div>
             </motion.div>
 
             {/* Desktop Navigation */}
@@ -223,15 +227,12 @@ export function Header() {
                 className={cn(
                   "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl",
                   "bg-[var(--color-navy)] text-white text-sm font-medium",
-                  "shadow-lg shadow-[var(--color-navy)]/20 hover:shadow-xl hover:shadow-[var(--color-navy)]/30",
+                  "shadow-lg shadow-[var(--color-navy)]/20 hover:shadow-xl hover:shadow-[var(--color-navy)]/25",
                   "hover:bg-[var(--color-navy-light)]",
-                  "transition-all duration-300",
-                  "relative overflow-hidden group"
+                  "transition-all duration-300"
                 )}
               >
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                <span className="relative">Заказать звонок</span>
+                <span>Заказать звонок</span>
               </motion.button>
 
               {/* Mobile menu button */}
@@ -366,9 +367,8 @@ export function Header() {
                     </div>
                   </a>
                   
-                  <button className="w-full py-3 rounded-xl bg-[var(--color-navy)] hover:bg-[var(--color-navy-light)] text-white font-medium shadow-lg shadow-[var(--color-navy)]/20 transition-colors relative overflow-hidden group">
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                    <span className="relative">Заказать звонок</span>
+                  <button className="w-full py-3 rounded-xl bg-[var(--color-navy)] hover:bg-[var(--color-navy-light)] text-white font-medium shadow-lg shadow-[var(--color-navy)]/20 transition-colors">
+                    Заказать звонок
                   </button>
                 </div>
               </div>

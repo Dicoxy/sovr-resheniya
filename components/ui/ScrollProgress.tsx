@@ -3,13 +3,10 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 
 interface ScrollProgressProps {
-  color?: string;
   height?: number;
-  showPercentage?: boolean;
 }
 
 export function ScrollProgress({ 
-  color = "var(--primary)",
   height = 3,
 }: ScrollProgressProps) {
   const { scrollYProgress } = useScroll();
@@ -25,7 +22,7 @@ export function ScrollProgress({
       style={{
         scaleX,
         height,
-        background: `linear-gradient(90deg, ${color} 0%, #3b82f6 50%, #8b5cf6 100%)`,
+        background: "linear-gradient(90deg, var(--color-navy) 0%, var(--color-cyan) 100%)",
       }}
     />
   );

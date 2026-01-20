@@ -3,17 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
-interface CursorGlowProps {
-  color?: string;
-  size?: number;
-  opacity?: number;
-}
-
-export function CursorGlow({ 
-  color = "rgba(37, 99, 235, 0.15)", 
-  size = 400,
-  opacity = 1 
-}: CursorGlowProps) {
+export function CursorGlow() {
   const [isVisible, setIsVisible] = useState(false);
   
   const cursorX = useMotionValue(-100);
@@ -25,8 +15,8 @@ export function CursorGlow({
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      cursorX.set(e.clientX - size / 2);
-      cursorY.set(e.clientY - size / 2);
+      cursorX.set(e.clientX - 200);
+      cursorY.set(e.clientY - 200);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -41,7 +31,7 @@ export function CursorGlow({
       window.removeEventListener("mousemove", handleMouseMove);
       document.body.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [cursorX, cursorY, size, isVisible]);
+  }, [cursorX, cursorY, isVisible]);
 
   // Не показываем на мобильных
   if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
@@ -52,7 +42,7 @@ export function CursorGlow({
     <motion.div
       className="pointer-events-none fixed inset-0 z-30 overflow-hidden"
       initial={{ opacity: 0 }}
-      animate={{ opacity: isVisible ? opacity : 0 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
       <motion.div
@@ -60,9 +50,9 @@ export function CursorGlow({
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
-          width: size,
-          height: size,
-          background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+          width: 400,
+          height: 400,
+          background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)",
         }}
       />
     </motion.div>

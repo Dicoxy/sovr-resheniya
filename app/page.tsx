@@ -11,19 +11,19 @@ const features = [
     icon: Cpu,
     title: "Официальный дистрибьютор",
     description: "Прямые поставки от производителей. Гарантия подлинности.",
-    color: "rgba(37, 99, 235, 0.15)",
+    color: "rgba(30, 58, 95, 0.1)", // navy
   },
   {
     icon: Truck,
     title: "Бесплатный тест-драйв",
     description: "Протестируйте робота на вашем объекте до покупки.",
-    color: "rgba(139, 92, 246, 0.15)",
+    color: "rgba(0, 212, 170, 0.1)", // cyan
   },
   {
     icon: Shield,
     title: "Сервисный центр",
     description: "Крупнейший в России сертифицированный сервис.",
-    color: "rgba(16, 185, 129, 0.15)",
+    color: "rgba(30, 58, 95, 0.1)", // navy
   },
 ];
 
@@ -45,25 +45,25 @@ export default function Home() {
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-          {/* Background gradient blobs */}
+          {/* Background - subtle gradient */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 -left-1/4 w-1/2 h-1/2 bg-gradient-to-br from-primary/10 to-violet-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-gradient-to-br from-blue-500/10 to-emerald-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-1/4 -left-1/4 w-1/2 h-1/2 bg-[var(--color-navy)]/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[var(--color-cyan)]/5 rounded-full blur-3xl" />
           </div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <SectionReveal delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-sm text-primary mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-navy)]/5 border border-[var(--color-navy)]/10 text-sm text-[var(--color-navy)] mb-8">
                 <Sparkles className="w-4 h-4" />
                 <span>Первый в России центр интеграции роботов</span>
               </div>
             </SectionReveal>
             
             <SectionReveal delay={0.2}>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+              <h1 className="text-h1 mb-6">
                 <span className="text-slate-800">Роботы для</span>
                 <br />
-                <span className="bg-gradient-to-r from-primary via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+                <span className="text-[var(--color-cyan)]">
                   бизнеса
                 </span>
               </h1>
@@ -105,7 +105,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+                <h2 className="text-h2 mb-4">
                   Почему выбирают нас
                 </h2>
                 <p className="text-slate-500 max-w-2xl mx-auto">
@@ -123,7 +123,7 @@ export default function Home() {
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
                         style={{ backgroundColor: feature.color }}
                       >
-                        <feature.icon className="w-7 h-7 text-slate-700" />
+                        <feature.icon className="w-7 h-7 text-[var(--color-navy)]" />
                       </div>
                       <h3 className="text-xl font-semibold text-slate-800 mb-3">
                         {feature.title}
@@ -144,7 +144,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionReveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+                <h2 className="text-h2 mb-4">
                   Наши партнёры
                 </h2>
                 <p className="text-slate-500">
@@ -159,7 +159,7 @@ export default function Home() {
                   <GlowCard hoverScale={1.03}>
                     <div className="p-6 text-center">
                       <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-slate-400">
+                        <span className="text-2xl font-bold text-[var(--color-navy)]/40">
                           {brand.name[0]}
                         </span>
                       </div>
@@ -174,17 +174,17 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
-          {/* Gradient orbs */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
+        <section className="py-24 bg-[var(--color-dark)] relative overflow-hidden">
+          {/* Gradient orbs - subtle */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-navy)]/30 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--color-cyan)]/10 rounded-full blur-3xl" />
           
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <SectionReveal>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white mb-6">
                 Готовы автоматизировать
                 <br />
-                <span className="bg-gradient-to-r from-primary via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                <span className="text-[var(--color-cyan)]">
                   ваш бизнес?
                 </span>
               </h2>
@@ -221,7 +221,7 @@ export default function Home() {
               🚧 Сайт в разработке по методологии Forja | Clean Tech Style
             </p>
             <p className="text-xs text-slate-400 mt-2">
-              ✓ CursorGlow • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal • ✓ Morphing Header
+              ✓ Logo • ✓ Typography • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal • ✓ Morphing Header
             </p>
           </div>
         </section>
