@@ -1,4 +1,5 @@
 import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { CursorGlow } from "@/components/ui/CursorGlow";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -214,19 +215,9 @@ export default function Home() {
             </SectionReveal>
           </div>
         </section>
-
-        {/* Dev status */}
-        <section className="py-12 bg-slate-50">
-          <div className="container text-center">
-            <p className="text-sm text-slate-500">
-              🚧 Сайт в разработке по методологии Forja | Clean Tech Style
-            </p>
-            <p className="text-xs text-slate-400 mt-2">
-              ✓ Logo • ✓ Typography • ✓ Fluid Containers • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal
-            </p>
-          </div>
-        </section>
       </main>
+      
+      <Footer />
     </>
   );
 }
