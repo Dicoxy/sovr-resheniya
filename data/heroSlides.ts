@@ -5,7 +5,7 @@ export interface HeroSlide {
   titleAccent?: string;
   subtitle: string;
   image: string;
-  video?: string; // Добавить позже
+  video?: string;
   cta: {
     primary: {
       label: string;
@@ -86,6 +86,7 @@ export const heroSlides: HeroSlide[] = [
     titleAccent: "территории",
     subtitle: "Снегоуборщики, газонокосилки, воздуходувки. Модульная система — один робот, много задач.",
     image: "/images/robots/outdoor.png",
+    video: "/videos/yarbo-snow.mp4",
     cta: {
       primary: {
         label: "Подробнее",
