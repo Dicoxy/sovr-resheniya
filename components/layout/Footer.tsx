@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, ArrowUpRight, Send } from "lucide-react";
+import { Phone, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 
 const catalogLinks = [
@@ -19,10 +18,20 @@ const companyLinks = [
   { label: "MARS — управление флотом", href: "/mars" },
   { label: "ROI-калькулятор", href: "/calculator" },
   { label: "Сервис и поддержка", href: "/service" },
-  { label: "Контакты", href: "/contacts" },
 ];
 
-const brands = ["Pudu", "Viggo", "X-Human", "Yarbo"];
+const legalLinks = [
+  { label: "Политика конфиденциальности", href: "/privacy" },
+  { label: "Пользовательское соглашение", href: "/terms" },
+  { label: "Публичная оферта", href: "/offer" },
+];
+
+const brands = [
+  { name: "Pudu", color: "#00A0E9", hoverBg: "hover:bg-[#00A0E9]/20", border: "border-[#00A0E9]/30" },
+  { name: "Viggo", color: "#FF6B35", hoverBg: "hover:bg-[#FF6B35]/20", border: "border-[#FF6B35]/30" },
+  { name: "X-Human", color: "#00C4B4", hoverBg: "hover:bg-[#00C4B4]/20", border: "border-[#00C4B4]/30" },
+  { name: "Yarbo", color: "#F5A623", hoverBg: "hover:bg-[#F5A623]/20", border: "border-[#F5A623]/30" },
+];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -36,39 +45,41 @@ export function Footer() {
       {/* Main footer content */}
       <div className="relative z-10">
         {/* Top section with links */}
-        <div className="container py-16 xl:py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-            {/* Logo & description */}
-            <div className="lg:col-span-4 space-y-6">
+        <div className="wrapper py-12 lg:py-16 2xl:py-20">
+          <div className="grid grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 2xl:gap-8">
+            
+            {/* Logo + Description + Brands */}
+            <div className="col-span-2 lg:col-span-4 space-y-5 2xl:space-y-6">
               <Logo variant="full" size="responsive" showText={true} theme="white" />
-              <p className="text-slate-400 text-sm xl:text-base leading-relaxed max-w-xs">
+              <p className="text-sm 2xl:text-[15px] text-slate-400 leading-relaxed max-w-xs 2xl:max-w-sm">
                 Первый в России центр интеграции промышленных и коммерческих роботов. 
                 Официальный дистрибьютор ведущих мировых производителей.
               </p>
-              {/* Brands */}
-              <div className="flex flex-wrap gap-2">
+              {/* Brands with colors */}
+              <div className="flex flex-wrap gap-2 2xl:gap-3">
                 {brands.map((brand) => (
                   <span 
-                    key={brand}
-                    className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-slate-400 border border-white/5"
+                    key={brand.name}
+                    className={`px-3 py-1.5 2xl:px-4 2xl:py-2 text-xs 2xl:text-sm font-medium rounded-lg bg-white/5 border transition-colors cursor-default ${brand.border} ${brand.hoverBg}`}
+                    style={{ color: brand.color }}
                   >
-                    {brand}
+                    {brand.name}
                   </span>
                 ))}
               </div>
             </div>
 
             {/* Catalog links */}
-            <div className="lg:col-span-3">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-5">
+            <div className="lg:col-span-2">
+              <h4 className="text-xs 2xl:text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 2xl:mb-5">
                 Каталог
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5 2xl:space-y-3">
                 {catalogLinks.map((link) => (
                   <li key={link.href}>
                     <Link 
                       href={link.href}
-                      className="text-sm xl:text-base text-slate-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-1 transition-all duration-200"
+                      className="text-sm 2xl:text-[15px] text-slate-400 hover:text-white transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -79,15 +90,15 @@ export function Footer() {
 
             {/* Company links */}
             <div className="lg:col-span-2">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-5">
+              <h4 className="text-xs 2xl:text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 2xl:mb-5">
                 Компания
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5 2xl:space-y-3">
                 {companyLinks.map((link) => (
                   <li key={link.href}>
                     <Link 
                       href={link.href}
-                      className="text-sm xl:text-base text-slate-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-1 transition-all duration-200"
+                      className="text-sm 2xl:text-[15px] text-slate-400 hover:text-white transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -96,92 +107,75 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Contacts */}
-            <div className="lg:col-span-3">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-5">
+            {/* Legal links */}
+            <div className="lg:col-span-2">
+              <h4 className="text-xs 2xl:text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 2xl:mb-5">
+                Документы
+              </h4>
+              <ul className="space-y-2.5 2xl:space-y-3">
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link 
+                      href={link.href}
+                      className="text-sm 2xl:text-[15px] text-slate-400 hover:text-white transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contacts - Compact version */}
+            <div className="col-span-2 lg:col-span-2">
+              <h4 className="text-xs 2xl:text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 2xl:mb-5">
                 Контакты
               </h4>
               <div className="space-y-4">
+                {/* Phone */}
                 <a 
                   href="tel:+78002345440"
-                  className="flex items-start gap-3 group"
+                  className="flex items-center gap-3 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[var(--color-cyan)]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--color-cyan)]/20 transition-colors">
-                    <Phone className="w-4 h-4 text-[var(--color-cyan)]" />
+                  <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-xl bg-[var(--color-cyan)]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--color-cyan)]/20 transition-colors">
+                    <Phone className="w-5 h-5 text-[var(--color-cyan)]" />
                   </div>
                   <div>
-                    <div className="text-xs text-slate-500">Бесплатный звонок</div>
-                    <div className="text-base xl:text-lg font-medium text-white group-hover:text-[var(--color-cyan)] transition-colors">
-                      +7 800 234 54 40
+                    <div className="text-[11px] 2xl:text-xs text-slate-500">Бесплатно по России</div>
+                    <div className="text-base 2xl:text-lg font-semibold text-white group-hover:text-[var(--color-cyan)] transition-colors">
+                      8 800 234 54 40
                     </div>
                   </div>
                 </a>
 
-                <a 
-                  href="mailto:info@b2b-robotics.ru"
-                  className="flex items-start gap-3 group"
+                {/* All contacts link */}
+                <Link 
+                  href="/contacts"
+                  className="inline-flex items-center gap-2 text-sm 2xl:text-[15px] text-slate-400 hover:text-[var(--color-cyan)] transition-colors group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[var(--color-navy)]/30 flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--color-navy)]/50 transition-colors">
-                    <Mail className="w-4 h-4 text-slate-300" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500">Email</div>
-                    <div className="text-sm xl:text-base text-slate-300 group-hover:text-white transition-colors">
-                      info@b2b-robotics.ru
-                    </div>
-                  </div>
-                </a>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--color-navy)]/30 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-4 h-4 text-slate-300" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500">Доставка</div>
-                    <div className="text-sm xl:text-base text-slate-300">
-                      Россия и СНГ
-                    </div>
-                  </div>
-                </div>
+                  <span>Все контакты</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-
-              {/* CTA Button */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="mt-6 w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[var(--color-cyan)] text-[var(--color-dark)] font-semibold text-sm shadow-lg shadow-[var(--color-cyan)]/20 hover:shadow-xl hover:shadow-[var(--color-cyan)]/30 transition-all duration-300"
-              >
-                <Send className="w-4 h-4" />
-                <span>Оставить заявку</span>
-              </motion.button>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="border-t border-white/5">
-          <div className="container py-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="text-sm text-slate-500 text-center md:text-left">
+          <div className="wrapper py-6 2xl:py-8">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+              {/* Copyright */}
+              <div className="text-sm 2xl:text-[15px] text-slate-400">
                 © {currentYear} ООО «Современные Решения». Все права защищены.
               </div>
               
-              <div className="flex items-center gap-6">
-                <Link 
-                  href="/privacy" 
-                  className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
-                >
-                  Политика конфиденциальности
-                </Link>
-                <a 
-                  href="https://b2b-robotics.ru" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-slate-500 hover:text-slate-300 inline-flex items-center gap-1 transition-colors"
-                >
-                  <span>b2b-robotics.ru</span>
-                  <ArrowUpRight className="w-3 h-3" />
-                </a>
+              {/* Requisites */}
+              <div className="text-sm 2xl:text-[15px] text-slate-400 lg:text-right">
+                <span>ИНН 7813674295 • ОГРН 1237800092750</span>
+                <span className="hidden lg:inline"> • </span>
+                <br className="lg:hidden" />
+                <span>г. Санкт-Петербург, ул. Большая Зеленина, д. 24, стр. 1, офис 165-Н</span>
               </div>
             </div>
           </div>

@@ -53,7 +53,7 @@ export default function Home() {
           </div>
           
           {/* Wide container for Hero */}
-          <div className="container-wide text-center relative z-10">
+          <div className="wrapper-wide text-center relative z-10">
             <SectionReveal delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-navy)]/5 border border-[var(--color-navy)]/10 text-sm xl:text-base text-[var(--color-navy)] mb-8">
                 <Sparkles className="w-4 h-4 xl:w-5 xl:h-5" />
@@ -104,7 +104,7 @@ export default function Home() {
 
         {/* Features Section */}
         <section className="section bg-slate-50/50">
-          <div className="container">
+          <div className="wrapper">
             <SectionReveal>
               <div className="text-center mb-16 xl:mb-20">
                 <h2 className="text-h2 mb-4">
@@ -143,7 +143,7 @@ export default function Home() {
 
         {/* Brands Section */}
         <section className="section">
-          <div className="container">
+          <div className="wrapper">
             <SectionReveal>
               <div className="text-center mb-16 xl:mb-20">
                 <h2 className="text-h2 mb-4">
@@ -181,7 +181,7 @@ export default function Home() {
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-navy)]/30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--color-cyan)]/10 rounded-full blur-3xl" />
           
-          <div className="container-wide text-center relative z-10">
+          <div className="wrapper-wide text-center relative z-10">
             <SectionReveal>
               <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-heading font-bold text-white mb-6">
                 Готовы автоматизировать

@@ -204,7 +204,7 @@ export function Header() {
           }}
         />
         
-        <div className="container h-full">
+        <div className="wrapper h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo */}
             <motion.div style={{ scale: logoScale }} className="flex-shrink-0">
