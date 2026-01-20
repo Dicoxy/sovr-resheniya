@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/Logo";
 
 const navItems = [
   { label: "Каталог", href: "/catalog", hasDropdown: true },
@@ -39,11 +40,11 @@ export function Header() {
   
   // Morphing values based on scroll
   const headerHeight = useTransform(scrollY, [0, 100], [80, 64]);
-  const logoScale = useTransform(scrollY, [0, 100], [1, 0.85]);
+  const logoScale = useTransform(scrollY, [0, 100], [1, 0.9]);
   const headerBg = useTransform(
     scrollY, 
     [0, 50], 
-    ["rgba(255,255,255,0)", "rgba(255,255,255,0.9)"]
+    ["rgba(255,255,255,0)", "rgba(255,255,255,0.95)"]
   );
   const headerShadow = useTransform(
     scrollY,
@@ -109,40 +110,26 @@ export function Header() {
           className="absolute bottom-0 left-0 right-0 h-px"
           style={{ 
             opacity: borderOpacity,
-            background: "linear-gradient(90deg, transparent, rgba(37,99,235,0.3) 20%, rgba(37,99,235,0.3) 80%, transparent)"
+            background: "linear-gradient(90deg, transparent, rgba(30,58,95,0.2) 20%, rgba(0,212,170,0.3) 50%, rgba(30,58,95,0.2) 80%, transparent)"
           }}
         />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <motion.div
-                style={{ scale: logoScale }}
-                className="relative"
-              >
-                {/* Logo with glow */}
-                <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary via-blue-500 to-violet-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary/25">
-                    <span className="text-white font-bold text-lg">СР</span>
-                  </div>
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary to-violet-500 rounded-xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="hidden sm:block"
-                style={{ scale: logoScale }}
-              >
-                <span className="font-bold text-lg text-slate-800">
-                  Современные
-                </span>
-                <span className="font-bold text-lg bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent ml-1">
-                  Решения
-                </span>
-              </motion.div>
-            </Link>
+            <motion.div style={{ scale: logoScale }}>
+              <Logo 
+                variant="full" 
+                size="md" 
+                showText={true}
+                className="hidden sm:flex"
+              />
+              <Logo 
+                variant="symbol" 
+                size="md"
+                className="sm:hidden"
+              />
+            </motion.div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -157,12 +144,12 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                      "text-slate-600 hover:text-primary",
+                      "text-slate-600 hover:text-[var(--color-navy)]",
                       "relative group flex items-center gap-1"
                     )}
                   >
                     {/* Hover background */}
-                    <span className="absolute inset-0 rounded-lg bg-primary/5 scale-0 group-hover:scale-100 transition-transform duration-200" />
+                    <span className="absolute inset-0 rounded-lg bg-[var(--color-navy)]/5 scale-0 group-hover:scale-100 transition-transform duration-200" />
                     <span className="relative">{item.label}</span>
                     {item.hasDropdown && (
                       <ChevronDown 
@@ -191,7 +178,7 @@ export function Header() {
                                 <Link
                                   key={subItem.href}
                                   href={subItem.href}
-                                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all duration-200"
                                 >
                                   <span className="text-base">{subItem.icon}</span>
                                   <span>{subItem.label}</span>
@@ -201,7 +188,7 @@ export function Header() {
                             <div className="mt-2 pt-2 border-t border-slate-100">
                               <Link
                                 href="/catalog"
-                                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all duration-200"
+                                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all duration-200"
                               >
                                 <span>Все категории</span>
                                 <ArrowRight className="w-4 h-4" />
@@ -221,10 +208,10 @@ export function Header() {
               {/* Phone */}
               <a
                 href="tel:+78002345440"
-                className="hidden md:flex items-center gap-2 text-sm text-slate-600 hover:text-primary transition-colors"
+                className="hidden md:flex items-center gap-2 text-sm text-slate-600 hover:text-[var(--color-navy)] transition-colors"
               >
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Phone className="w-4 h-4 text-primary" />
+                <div className="w-8 h-8 rounded-lg bg-[var(--color-navy)]/10 flex items-center justify-center">
+                  <Phone className="w-4 h-4 text-[var(--color-navy)]" />
                 </div>
                 <span className="font-medium">+7 800 234 54 40</span>
               </a>
@@ -235,9 +222,10 @@ export function Header() {
                 whileTap={{ scale: 0.98 }}
                 className={cn(
                   "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl",
-                  "bg-gradient-to-r from-primary via-blue-500 to-violet-500 text-white text-sm font-medium",
-                  "shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30",
-                  "transition-shadow duration-300",
+                  "bg-[var(--color-navy)] text-white text-sm font-medium",
+                  "shadow-lg shadow-[var(--color-navy)]/20 hover:shadow-xl hover:shadow-[var(--color-navy)]/30",
+                  "hover:bg-[var(--color-navy-light)]",
+                  "transition-all duration-300",
                   "relative overflow-hidden group"
                 )}
               >
@@ -305,9 +293,7 @@ export function Header() {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                  <span className="font-bold text-lg bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-                    Меню
-                  </span>
+                  <Logo variant="full" size="sm" showText={true} href={undefined} />
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -330,7 +316,7 @@ export function Header() {
                         <Link
                           href={item.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:text-primary hover:bg-primary/5 transition-all"
+                          className="flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all"
                         >
                           <span className="font-medium">{item.label}</span>
                         </Link>
@@ -354,7 +340,7 @@ export function Header() {
                           <Link
                             href={item.href}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="flex flex-col items-center gap-1 p-3 rounded-xl text-center text-sm text-slate-500 hover:text-primary hover:bg-primary/5 transition-all"
+                            className="flex flex-col items-center gap-1 p-3 rounded-xl text-center text-sm text-slate-500 hover:text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all"
                           >
                             <span className="text-xl">{item.icon}</span>
                             <span className="text-xs">{item.label}</span>
@@ -371,8 +357,8 @@ export function Header() {
                     href="tel:+78002345440"
                     className="flex items-center gap-3 text-slate-600"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-primary" />
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-navy)]/10 flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-[var(--color-navy)]" />
                     </div>
                     <div>
                       <div className="text-xs text-slate-400">Бесплатный звонок</div>
@@ -380,7 +366,7 @@ export function Header() {
                     </div>
                   </a>
                   
-                  <button className="w-full py-3 rounded-xl bg-gradient-to-r from-primary via-blue-500 to-violet-500 text-white font-medium shadow-lg shadow-primary/25 relative overflow-hidden group">
+                  <button className="w-full py-3 rounded-xl bg-[var(--color-navy)] hover:bg-[var(--color-navy-light)] text-white font-medium shadow-lg shadow-[var(--color-navy)]/20 transition-colors relative overflow-hidden group">
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                     <span className="relative">Заказать звонок</span>
                   </button>

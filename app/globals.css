@@ -1,57 +1,235 @@
 @import "tailwindcss";
 
+/* =============================================================================
+   DESIGN TOKENS — CSS Variables
+   Современные Решения
+   ============================================================================= */
+
 :root {
-  /* Основные цвета (светлая тема b2b-robotics.ru) */
-  --background: #ffffff;
-  --foreground: #1a1a2e;
+  /* -------------------------------------------------------------------------
+     Цветовая палитра
+     ------------------------------------------------------------------------- */
   
-  /* Акценты - синий как на текущем сайте */
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #3b82f6;
+  /* Основные цвета */
+  --color-navy: #1E3A5F;
+  --color-navy-light: #2D5A8A;
+  --color-navy-dark: #152A45;
   
-  /* Серые оттенки */
-  --secondary: #64748b;
-  --muted: #94a3b8;
+  /* Акцент */
+  --color-cyan: #00D4AA;
+  --color-cyan-light: #33DDBB;
+  --color-cyan-dark: #00B894;
   
-  /* Поверхности */
-  --card: #f8fafc;
-  --card-hover: #f1f5f9;
-  --card-border: #e2e8f0;
+  /* Нейтральные */
+  --color-white: #FFFFFF;
+  --color-slate-50: #F8FAFC;
+  --color-slate-100: #F1F5F9;
+  --color-slate-200: #E2E8F0;
+  --color-slate-300: #CBD5E1;
+  --color-slate-400: #94A3B8;
+  --color-slate-500: #64748B;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1E293B;
+  --color-slate-900: #0F172A;
+  --color-dark: #0D1B2A;
   
-  /* Текст */
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  /* Бренды партнёров */
+  --color-pudu: #00A0E9;
+  --color-orange: #FF6B35;
+  --color-green: #22C55E;
   
-  /* Успех/Ошибка */
-  --success: #22c55e;
-  --error: #ef4444;
+  /* Семантические */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
   
-  /* Градиенты */
-  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  --gradient-dark: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+  /* -------------------------------------------------------------------------
+     Семантические переменные (для удобства)
+     ------------------------------------------------------------------------- */
+  --background: var(--color-white);
+  --foreground: var(--color-slate-800);
+  --primary: var(--color-navy);
+  --primary-hover: var(--color-navy-light);
+  --accent: var(--color-cyan);
+  --accent-hover: var(--color-cyan-dark);
+  --muted: var(--color-slate-400);
+  --border: var(--color-slate-200);
+  --card: var(--color-slate-50);
+  --card-hover: var(--color-slate-100);
+  
+  /* -------------------------------------------------------------------------
+     Типографика
+     ------------------------------------------------------------------------- */
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  
+  /* -------------------------------------------------------------------------
+     Радиусы
+     ------------------------------------------------------------------------- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  /* -------------------------------------------------------------------------
+     Тени
+     ------------------------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 212, 170, 0.3);
+  --shadow-glow-navy: 0 0 20px rgba(30, 58, 95, 0.3);
 }
 
+/* =============================================================================
+   Tailwind Theme Integration
+   ============================================================================= */
+
 @theme inline {
+  /* Цвета */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-card: var(--card);
+  --color-accent: var(--accent);
   --color-muted: var(--muted);
-  --font-sans: var(--font-inter);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  
+  /* Шрифты */
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+  --font-mono: var(--font-mono);
 }
 
-/* Убираем тёмную тему - используем только светлую */
+/* =============================================================================
+   Base Styles
+   ============================================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }
 
-/* Базовые стили для секций */
+/* =============================================================================
+   Typography Utilities
+   ============================================================================= */
+
+/* Заголовки — Space Grotesk */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Моноширинный */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Типографическая шкала */
+.text-h1 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.text-h2 {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--color-slate-800);
+}
+
+.text-h3 {
+  font-family: var(--font-sans);
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--color-slate-800);
+}
+
+.text-h4 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--color-slate-800);
+}
+
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.text-caption {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Desktop sizes */
+@media (min-width: 768px) {
+  .text-h1 {
+    font-size: 3.5rem;
+  }
+  
+  .text-h2 {
+    font-size: 2.5rem;
+  }
+  
+  .text-h3 {
+    font-size: 1.75rem;
+  }
+  
+  .text-h4 {
+    font-size: 1.375rem;
+  }
+}
+
+/* =============================================================================
+   Color Utilities
+   ============================================================================= */
+
+.text-navy { color: var(--color-navy); }
+.text-cyan { color: var(--color-cyan); }
+.text-slate { color: var(--color-slate-600); }
+.text-muted { color: var(--color-slate-400); }
+
+.bg-navy { background-color: var(--color-navy); }
+.bg-cyan { background-color: var(--color-cyan); }
+.bg-slate-50 { background-color: var(--color-slate-50); }
+.bg-dark { background-color: var(--color-dark); }
+
+.border-slate { border-color: var(--color-slate-200); }
+
+/* =============================================================================
+   Component Utilities
+   ============================================================================= */
+
+/* Секции */
 .section {
   @apply py-16 md:py-24;
 }
@@ -60,30 +238,98 @@ body {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
-/* Плавные переходы */
-* {
-  @apply transition-colors duration-200;
+/* Карточки */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* Скролл плавный */
-html {
-  scroll-behavior: smooth;
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-slate-300);
 }
 
-/* Кастомный скроллбар */
+/* Кнопки */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-white);
+  background: var(--color-navy);
+  border-radius: var(--radius-lg);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-navy-light);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-navy);
+  background: transparent;
+  border: 1px solid var(--color-slate-200);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-navy);
+  background: var(--color-slate-50);
+}
+
+/* Glow effects */
+.glow-cyan {
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.glow-navy {
+  box-shadow: var(--shadow-glow-navy);
+}
+
+/* =============================================================================
+   Scrollbar
+   ============================================================================= */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--card);
+  background: var(--color-slate-100);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--secondary);
+  background: var(--color-slate-300);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: var(--color-navy);
+}
+
+/* =============================================================================
+   Selection
+   ============================================================================= */
+
+::selection {
+  background: var(--color-cyan);
+  color: var(--color-dark);
 }
