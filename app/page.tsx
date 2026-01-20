@@ -1,30 +1,31 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { HeroSlider } from "@/components/sections/HeroSlider";
 import { CursorGlow } from "@/components/ui/CursorGlow";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlowCard } from "@/components/ui/GlowCard";
 import { SectionReveal, StaggerContainer, StaggerItem } from "@/components/ui/SectionReveal";
-import { Cpu, Truck, Shield, Sparkles, ArrowRight } from "lucide-react";
+import { Cpu, Truck, Shield } from "lucide-react";
 
 const features = [
   {
     icon: Cpu,
     title: "Официальный дистрибьютор",
     description: "Прямые поставки от производителей. Гарантия подлинности.",
-    color: "rgba(30, 58, 95, 0.1)", // navy
+    color: "rgba(30, 58, 95, 0.1)",
   },
   {
     icon: Truck,
     title: "Бесплатный тест-драйв",
     description: "Протестируйте робота на вашем объекте до покупки.",
-    color: "rgba(0, 212, 170, 0.1)", // cyan
+    color: "rgba(0, 212, 170, 0.1)",
   },
   {
     icon: Shield,
     title: "Сервисный центр",
     description: "Крупнейший в России сертифицированный сервис.",
-    color: "rgba(30, 58, 95, 0.1)", // navy
+    color: "rgba(30, 58, 95, 0.1)",
   },
 ];
 
@@ -44,63 +45,8 @@ export default function Home() {
       <Header />
       
       <main className="min-h-screen bg-white">
-        {/* Hero Section — uses wider container */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-          {/* Background - subtle gradient */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 -left-1/4 w-1/2 h-1/2 bg-[var(--color-navy)]/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[var(--color-cyan)]/5 rounded-full blur-3xl" />
-          </div>
-          
-          {/* Wide container for Hero */}
-          <div className="wrapper-wide text-center relative z-10">
-            <SectionReveal delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-navy)]/5 border border-[var(--color-navy)]/10 text-sm xl:text-base text-[var(--color-navy)] mb-8">
-                <Sparkles className="w-4 h-4 xl:w-5 xl:h-5" />
-                <span>Первый в России центр интеграции роботов</span>
-              </div>
-            </SectionReveal>
-            
-            <SectionReveal delay={0.2}>
-              <h1 className="text-h1 mb-6">
-                <span className="text-slate-800">Роботы для</span>
-                <br />
-                <span className="text-[var(--color-cyan)]">
-                  бизнеса
-                </span>
-              </h1>
-            </SectionReveal>
-            
-            <SectionReveal delay={0.3}>
-              <p className="text-lg xl:text-xl 2xl:text-2xl text-slate-500 mb-10 xl:mb-12 max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed">
-                Автоматизируйте уборку, доставку и обслуживание с помощью 
-                промышленных роботов от мировых лидеров
-              </p>
-            </SectionReveal>
-            
-            <SectionReveal delay={0.4}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <MagneticButton variant="primary" size="lg" href="/catalog">
-                  Смотреть каталог
-                  <ArrowRight className="w-5 h-5" />
-                </MagneticButton>
-                <MagneticButton variant="outline" size="lg" href="/calculator">
-                  Рассчитать окупаемость
-                </MagneticButton>
-              </div>
-            </SectionReveal>
-            
-            {/* Scroll indicator */}
-            <SectionReveal delay={0.6}>
-              <div className="mt-16 xl:mt-20 flex flex-col items-center gap-2 text-slate-400">
-                <span className="text-sm xl:text-base">Листайте вниз</span>
-                <div className="w-6 h-10 xl:w-7 xl:h-12 rounded-full border-2 border-slate-300 flex justify-center pt-2">
-                  <div className="w-1.5 h-3 xl:w-2 xl:h-4 bg-slate-400 rounded-full animate-bounce" />
-                </div>
-              </div>
-            </SectionReveal>
-          </div>
-        </section>
+        {/* Hero Slider */}
+        <HeroSlider />
 
         {/* Features Section */}
         <section className="section bg-slate-50/50">
@@ -175,9 +121,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section — uses wider container */}
+        {/* CTA Section */}
         <section className="section bg-[var(--color-dark)] relative overflow-hidden">
-          {/* Gradient orbs - subtle */}
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-navy)]/30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--color-cyan)]/10 rounded-full blur-3xl" />
           
