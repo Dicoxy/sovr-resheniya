@@ -51,10 +51,10 @@ export default function Home() {
             <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[var(--color-cyan)]/5 rounded-full blur-3xl" />
           </div>
           
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="container text-center relative z-10">
             <SectionReveal delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-navy)]/5 border border-[var(--color-navy)]/10 text-sm text-[var(--color-navy)] mb-8">
-                <Sparkles className="w-4 h-4" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-navy)]/5 border border-[var(--color-navy)]/10 text-sm xl:text-base text-[var(--color-navy)] mb-8">
+                <Sparkles className="w-4 h-4 xl:w-5 xl:h-5" />
                 <span>Первый в России центр интеграции роботов</span>
               </div>
             </SectionReveal>
@@ -70,7 +70,7 @@ export default function Home() {
             </SectionReveal>
             
             <SectionReveal delay={0.3}>
-              <p className="text-lg sm:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg xl:text-xl 2xl:text-2xl text-slate-500 mb-10 xl:mb-12 max-w-2xl xl:max-w-3xl mx-auto leading-relaxed">
                 Автоматизируйте уборку, доставку и обслуживание с помощью 
                 промышленных роботов от мировых лидеров
               </p>
@@ -90,10 +90,10 @@ export default function Home() {
             
             {/* Scroll indicator */}
             <SectionReveal delay={0.6}>
-              <div className="mt-16 flex flex-col items-center gap-2 text-slate-400">
-                <span className="text-sm">Листайте вниз</span>
-                <div className="w-6 h-10 rounded-full border-2 border-slate-300 flex justify-center pt-2">
-                  <div className="w-1.5 h-3 bg-slate-400 rounded-full animate-bounce" />
+              <div className="mt-16 xl:mt-20 flex flex-col items-center gap-2 text-slate-400">
+                <span className="text-sm xl:text-base">Листайте вниз</span>
+                <div className="w-6 h-10 xl:w-7 xl:h-12 rounded-full border-2 border-slate-300 flex justify-center pt-2">
+                  <div className="w-1.5 h-3 xl:w-2 xl:h-4 bg-slate-400 rounded-full animate-bounce" />
                 </div>
               </div>
             </SectionReveal>
@@ -101,34 +101,34 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-24 bg-slate-50/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section bg-slate-50/50">
+          <div className="container">
             <SectionReveal>
-              <div className="text-center mb-16">
+              <div className="text-center mb-16 xl:mb-20">
                 <h2 className="text-h2 mb-4">
                   Почему выбирают нас
                 </h2>
-                <p className="text-slate-500 max-w-2xl mx-auto">
+                <p className="text-slate-500 max-w-2xl xl:max-w-3xl mx-auto text-base xl:text-lg">
                   Комплексный подход к автоматизации вашего бизнеса
                 </p>
               </div>
             </SectionReveal>
             
-            <StaggerContainer className="grid md:grid-cols-3 gap-6" staggerDelay={0.15}>
+            <StaggerContainer className="grid md:grid-cols-3 gap-6 xl:gap-8" staggerDelay={0.15}>
               {features.map((feature) => (
                 <StaggerItem key={feature.title}>
                   <GlowCard glowColor={feature.color} className="h-full">
-                    <div className="p-8">
+                    <div className="p-8 xl:p-10">
                       <div 
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
+                        className="w-14 h-14 xl:w-16 xl:h-16 rounded-2xl flex items-center justify-center mb-6"
                         style={{ backgroundColor: feature.color }}
                       >
-                        <feature.icon className="w-7 h-7 text-[var(--color-navy)]" />
+                        <feature.icon className="w-7 h-7 xl:w-8 xl:h-8 text-[var(--color-navy)]" />
                       </div>
-                      <h3 className="text-xl font-semibold text-slate-800 mb-3">
+                      <h3 className="text-xl xl:text-2xl font-semibold text-slate-800 mb-3">
                         {feature.title}
                       </h3>
-                      <p className="text-slate-500 leading-relaxed">
+                      <p className="text-slate-500 leading-relaxed text-base xl:text-lg">
                         {feature.description}
                       </p>
                     </div>
@@ -140,31 +140,31 @@ export default function Home() {
         </section>
 
         {/* Brands Section */}
-        <section className="py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section">
+          <div className="container">
             <SectionReveal>
-              <div className="text-center mb-16">
+              <div className="text-center mb-16 xl:mb-20">
                 <h2 className="text-h2 mb-4">
                   Наши партнёры
                 </h2>
-                <p className="text-slate-500">
+                <p className="text-slate-500 text-base xl:text-lg">
                   Официальный дистрибьютор ведущих производителей
                 </p>
               </div>
             </SectionReveal>
             
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4" staggerDelay={0.1}>
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 xl:gap-6" staggerDelay={0.1}>
               {brands.map((brand) => (
                 <StaggerItem key={brand.name}>
                   <GlowCard hoverScale={1.03}>
-                    <div className="p-6 text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[var(--color-navy)]/40">
+                    <div className="p-6 xl:p-8 text-center">
+                      <div className="w-16 h-16 xl:w-20 xl:h-20 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
+                        <span className="text-2xl xl:text-3xl font-bold text-[var(--color-navy)]/40">
                           {brand.name[0]}
                         </span>
                       </div>
-                      <h3 className="font-semibold text-slate-800 mb-1">{brand.name}</h3>
-                      <p className="text-sm text-slate-500">{brand.desc}</p>
+                      <h3 className="font-semibold text-slate-800 mb-1 text-base xl:text-lg">{brand.name}</h3>
+                      <p className="text-sm xl:text-base text-slate-500">{brand.desc}</p>
                     </div>
                   </GlowCard>
                 </StaggerItem>
@@ -174,14 +174,14 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 bg-[var(--color-dark)] relative overflow-hidden">
+        <section className="section bg-[var(--color-dark)] relative overflow-hidden">
           {/* Gradient orbs - subtle */}
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-navy)]/30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--color-cyan)]/10 rounded-full blur-3xl" />
           
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="container text-center relative z-10">
             <SectionReveal>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-heading font-bold text-white mb-6">
                 Готовы автоматизировать
                 <br />
                 <span className="text-[var(--color-cyan)]">
@@ -191,7 +191,7 @@ export default function Home() {
             </SectionReveal>
             
             <SectionReveal delay={0.1}>
-              <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+              <p className="text-slate-400 text-lg xl:text-xl mb-10 xl:mb-12 max-w-xl xl:max-w-2xl mx-auto">
                 Получите бесплатную консультацию и расчёт окупаемости 
                 для вашего объекта
               </p>
@@ -216,12 +216,12 @@ export default function Home() {
 
         {/* Dev status */}
         <section className="py-12 bg-slate-50">
-          <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="container text-center">
             <p className="text-sm text-slate-500">
               🚧 Сайт в разработке по методологии Forja | Clean Tech Style
             </p>
             <p className="text-xs text-slate-400 mt-2">
-              ✓ Logo • ✓ Typography • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal • ✓ Morphing Header
+              ✓ Logo • ✓ Typography • ✓ Responsive Scale • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal
             </p>
           </div>
         </section>
