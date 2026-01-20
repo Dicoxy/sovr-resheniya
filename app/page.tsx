@@ -43,7 +43,7 @@ export default function Home() {
       <Header />
       
       <main className="min-h-screen bg-white">
-        {/* Hero Section */}
+        {/* Hero Section — uses wider container */}
         <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
           {/* Background - subtle gradient */}
           <div className="absolute inset-0 overflow-hidden">
@@ -51,7 +51,8 @@ export default function Home() {
             <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[var(--color-cyan)]/5 rounded-full blur-3xl" />
           </div>
           
-          <div className="container text-center relative z-10">
+          {/* Wide container for Hero */}
+          <div className="container-wide text-center relative z-10">
             <SectionReveal delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-navy)]/5 border border-[var(--color-navy)]/10 text-sm xl:text-base text-[var(--color-navy)] mb-8">
                 <Sparkles className="w-4 h-4 xl:w-5 xl:h-5" />
@@ -70,7 +71,7 @@ export default function Home() {
             </SectionReveal>
             
             <SectionReveal delay={0.3}>
-              <p className="text-lg xl:text-xl 2xl:text-2xl text-slate-500 mb-10 xl:mb-12 max-w-2xl xl:max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg xl:text-xl 2xl:text-2xl text-slate-500 mb-10 xl:mb-12 max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed">
                 Автоматизируйте уборку, доставку и обслуживание с помощью 
                 промышленных роботов от мировых лидеров
               </p>
@@ -173,13 +174,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section — uses wider container */}
         <section className="section bg-[var(--color-dark)] relative overflow-hidden">
           {/* Gradient orbs - subtle */}
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-navy)]/30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--color-cyan)]/10 rounded-full blur-3xl" />
           
-          <div className="container text-center relative z-10">
+          <div className="container-wide text-center relative z-10">
             <SectionReveal>
               <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-heading font-bold text-white mb-6">
                 Готовы автоматизировать
@@ -191,7 +192,7 @@ export default function Home() {
             </SectionReveal>
             
             <SectionReveal delay={0.1}>
-              <p className="text-slate-400 text-lg xl:text-xl mb-10 xl:mb-12 max-w-xl xl:max-w-2xl mx-auto">
+              <p className="text-slate-400 text-lg xl:text-xl mb-10 xl:mb-12 max-w-xl xl:max-w-2xl 2xl:max-w-3xl mx-auto">
                 Получите бесплатную консультацию и расчёт окупаемости 
                 для вашего объекта
               </p>
@@ -221,7 +222,7 @@ export default function Home() {
               🚧 Сайт в разработке по методологии Forja | Clean Tech Style
             </p>
             <p className="text-xs text-slate-400 mt-2">
-              ✓ Logo • ✓ Typography • ✓ Responsive Scale • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal
+              ✓ Logo • ✓ Typography • ✓ Fluid Containers • ✓ MagneticButton • ✓ ScrollProgress • ✓ GlowCard • ✓ SectionReveal
             </p>
           </div>
         </section>
