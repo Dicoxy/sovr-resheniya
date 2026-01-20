@@ -39,7 +39,6 @@ export function Header() {
   const { scrollY } = useScroll();
   
   // Morphing values based on scroll
-  const headerHeight = useTransform(scrollY, [0, 100], [80, 64]);
   const logoScale = useTransform(scrollY, [0, 100], [1, 0.92]);
   const headerBg = useTransform(
     scrollY, 
@@ -99,11 +98,10 @@ export function Header() {
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         style={{
-          height: headerHeight,
           backgroundColor: headerBg,
           boxShadow: headerShadow,
         }}
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl h-[72px] xl:h-20 2xl:h-[88px]"
       >
         {/* Gradient border bottom */}
         <motion.div 
@@ -135,8 +133,8 @@ export function Header() {
               </div>
             </motion.div>
 
-            {/* Desktop Navigation — UPPERCASE with letter-spacing */}
-            <nav className="hidden lg:flex items-center gap-1">
+            {/* Desktop Navigation — responsive font sizes */}
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 2xl:gap-2">
               {navItems.map((item) => (
                 <div
                   key={item.href}
@@ -147,8 +145,8 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "px-4 py-2 rounded-lg",
-                      "text-[13px] font-medium uppercase tracking-wide",
+                      "px-3 py-2 xl:px-4 2xl:px-5 rounded-lg",
+                      "text-[11px] xl:text-[13px] 2xl:text-[15px] font-medium uppercase tracking-wide",
                       "text-slate-600 hover:text-[var(--color-navy)]",
                       "transition-all duration-200",
                       "relative group flex items-center gap-1"
@@ -160,7 +158,7 @@ export function Header() {
                     {item.hasDropdown && (
                       <ChevronDown 
                         className={cn(
-                          "w-4 h-4 transition-transform duration-200 relative",
+                          "w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200 relative",
                           isDropdownOpen && "rotate-180"
                         )} 
                       />
@@ -176,15 +174,15 @@ export function Header() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute top-full left-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden"
+                          className="absolute top-full left-0 mt-2 w-72 2xl:w-80 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden"
                         >
-                          <div className="p-3">
+                          <div className="p-3 2xl:p-4">
                             <div className="grid grid-cols-2 gap-1">
                               {catalogItems.map((subItem) => (
                                 <Link
                                   key={subItem.href}
                                   href={subItem.href}
-                                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all duration-200"
+                                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm 2xl:text-base text-slate-600 hover:text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all duration-200"
                                 >
                                   <span className="text-base">{subItem.icon}</span>
                                   <span>{subItem.label}</span>
@@ -194,7 +192,7 @@ export function Header() {
                             <div className="mt-2 pt-2 border-t border-slate-100">
                               <Link
                                 href="/catalog"
-                                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all duration-200"
+                                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm 2xl:text-base font-medium text-[var(--color-navy)] hover:bg-[var(--color-navy)]/5 transition-all duration-200"
                               >
                                 <span>Все категории</span>
                                 <ArrowRight className="w-4 h-4" />
@@ -210,14 +208,14 @@ export function Header() {
             </nav>
 
             {/* Right side */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4">
               {/* Phone */}
               <a
                 href="tel:+78002345440"
-                className="hidden md:flex items-center gap-2 text-sm text-slate-600 hover:text-[var(--color-navy)] transition-colors"
+                className="hidden md:flex items-center gap-2 text-[12px] xl:text-sm 2xl:text-base text-slate-600 hover:text-[var(--color-navy)] transition-colors"
               >
-                <div className="w-9 h-9 rounded-lg bg-[var(--color-navy)]/10 flex items-center justify-center">
-                  <Phone className="w-4 h-4 text-[var(--color-navy)]" />
+                <div className="w-8 h-8 xl:w-9 xl:h-9 2xl:w-10 2xl:h-10 rounded-lg bg-[var(--color-navy)]/10 flex items-center justify-center">
+                  <Phone className="w-3.5 h-3.5 xl:w-4 xl:h-4 2xl:w-5 2xl:h-5 text-[var(--color-navy)]" />
                 </div>
                 <span className="font-medium tracking-tight">+7 800 234 54 40</span>
               </a>
@@ -227,9 +225,10 @@ export function Header() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className={cn(
-                  "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl",
+                  "hidden sm:flex items-center gap-2",
+                  "px-4 py-2 xl:px-5 xl:py-2.5 2xl:px-6 2xl:py-3 rounded-xl",
                   "bg-[var(--color-navy)] text-white",
-                  "text-[13px] font-semibold uppercase tracking-wide",
+                  "text-[11px] xl:text-[13px] 2xl:text-[15px] font-semibold uppercase tracking-wide",
                   "shadow-lg shadow-[var(--color-navy)]/20 hover:shadow-xl hover:shadow-[var(--color-navy)]/25",
                   "hover:bg-[var(--color-navy-light)]",
                   "transition-all duration-300"
